@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('user_name_en',50);
             $table->string('user_name_ar',50);
             $table->string('email')->unique();
+            $table->string('verification_code')->nullable();
+            $table->time('verification_code_expiration')->nullable();
+            $table->boolean('is_verified')->default(false);
             $table->string('password');
             $table->string('country')->nullable();
             $table->string('phone_number')->nullable();

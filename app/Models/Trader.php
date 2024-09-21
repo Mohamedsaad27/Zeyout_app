@@ -8,7 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Trader extends Model
 {
     use HasFactory;
-    protected $guarded = [];
+    protected $fillable = [
+        'description_ar',
+        'description_en',
+        'FacebookURL',
+        'InstagramURL',
+        'user_id',
+    ];
 
     public function user()
     {

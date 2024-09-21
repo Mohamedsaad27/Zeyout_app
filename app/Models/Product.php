@@ -21,25 +21,27 @@ class Product extends Model
     {
         return $this->hasMany(Favorite::class);
     }
-    
+
     public function getImageAttribute($value)
     {
         return $value ? asset('storage/products/' . $value) : null;
     }
-    
+
     public function setImageAttribute($value)
     {
         $this->attributes['image'] = $value->store('products', 'public');
     }
-    
+
     public function category()
     {
         return $this->belongsToMany(Category::class,'product_categories','product_id','category_id');
     }
-    
+
     public function brand()
     {
         return $this->belongsTo(Brand::class);
     }
-    
+    public function relatedProducts(){
+        return $this->belongsToMany(Product::class,'product_related','product_id','related_product_id');
+    }
 }

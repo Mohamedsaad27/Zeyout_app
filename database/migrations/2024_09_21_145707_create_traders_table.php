@@ -21,6 +21,10 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
+        Schema::table('products', function (Blueprint $table) {
+            $table->unsignedBigInteger('trader_id')->nullable();
+            $table->foreign('trader_id')->references('id')->on('traders')->cascadeOnDelete()->cascadeOnUpdate();
+        });
     }
 
     /**
