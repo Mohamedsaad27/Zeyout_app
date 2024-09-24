@@ -11,7 +11,7 @@ class ChangePersonalInfo extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,12 @@ class ChangePersonalInfo extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'user_name_en' => 'required|string|min:3|max:255',
+            'user_name_ar' => 'required|string|min:3|max:255',
+            'country' => 'required|string|min:3|max:255',
+            'phone_number' => 'required|string|min:3|max:255',
+            'birth_date' => 'required|date',
+            'profile_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 }

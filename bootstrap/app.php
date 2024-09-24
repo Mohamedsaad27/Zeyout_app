@@ -13,6 +13,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->append(ApiLocalization::class);
+        $middleware->alias([
+            'localization' => ApiLocalization::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

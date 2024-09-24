@@ -26,12 +26,9 @@ return [
     'ipv4' => ':attribute يجب أن يكون عنوان IPv4 صالح.',
     'ipv6' => ':attribute يجب أن يكون عنوان IPv6 صالح.',
     'ipv4' => ':attribute يجب أن يكون عنوان IPv4 صالح.',
+    
 
-    'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'message',
-        ],
-    ],
+    
     'attributes' => [
         'user_name_en' => 'اسم المستخدم باللغة الإنجليزية',
         'user_name_ar' => 'اسم المستخدم باللغة العربية',
@@ -47,6 +44,7 @@ return [
         'FacebookURL' => 'عنوان URL فيسبوك',
         'InstagramURL' => 'عنوان URL انستاجرام',
     ],
+
 ];
 
 

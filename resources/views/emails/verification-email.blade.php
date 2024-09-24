@@ -31,11 +31,16 @@
             padding: 10px;
             background-color: #e9e9e9;
         }
+        .logo {
+            max-width: 200px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
+            <img src="{{ asset('images/download.png') }}" alt="Company Logo" class="logo">
             <h1>Email Verification</h1>
         </div>
         <div class="content">

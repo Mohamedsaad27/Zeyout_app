@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable 
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -26,6 +26,9 @@ class User extends Authenticatable
         'phone_number',
         'birth_date',
         'profile_image',
+        'verification_code',
+        'verification_code_expiration',
+        'is_verified',
         'type',
     ];
 
