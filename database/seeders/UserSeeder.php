@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
             'user_name_ar' => 'ادمن',
             'email' => 'admin@admin.com',
             'password' => Hash::make('password'),
-            'type' => 'consumer',
+            'type' => 'admin',
             'is_verified' => true,
             'email_verified_at' => now(),
             'created_at' => now(),

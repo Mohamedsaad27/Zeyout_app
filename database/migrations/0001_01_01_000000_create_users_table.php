@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('phone_number')->nullable();
             $table->date('birth_date')->nullable();
             $table->string('profile_image')->nullable();
-            $table->enum('type', ['trader', 'consumer'])->nullable();
+            $table->enum('type', ['trader', 'consumer','admin'])->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

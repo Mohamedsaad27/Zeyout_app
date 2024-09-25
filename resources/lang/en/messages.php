@@ -29,4 +29,8 @@ return [
     'no_categories_found' => 'No categories found',
     'category_created_successfully' => 'Category created successfully',
     'category_updated_successfully' => 'Category updated successfully',
+    'category_deleted_successfully' => 'Category deleted successfully',
+    'brand_created_successfully' => 'Brand created successfully',
+    'brand_updated_successfully' => 'Brand updated successfully',
+    'brand_deleted_successfully' => 'Brand deleted successfully',
 ];

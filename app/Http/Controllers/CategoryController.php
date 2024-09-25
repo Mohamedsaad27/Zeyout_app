@@ -19,19 +19,4 @@ class CategoryController extends Controller
     {
         return $this->categoryRepository->index();
     }
-
-    public function store(Request $request)
-    {
-        return $this->categoryRepository->store($request);
-    }
-
-    public function update(Request $request, Category $category)
-    {
-        return $this->categoryRepository->update($request, $category);
-    }
-
-    public function destroy(Category $category)
-    {
-        return $this->categoryRepository->destroy($category);
-    }
 }

@@ -32,4 +32,10 @@ return [
     'category_updated_successfully' => 'تم تحديث الفئة بنجاح',
     'category_not_found' => 'لم يتم العثور على الفئة',  
     'category_deleted_successfully' => 'تم حذف الفئة بنجاح',
+    'brand_created_successfully' => 'تم إنشاء العلامة التجارية بنجاح',
+    'brand_updated_successfully' => 'تم تحديث العلامة التجارية بنجاح',
+    'brand_deleted_successfully' => 'تم حذف العلامة التجارية بنجاح',
+    'product_created_successfully' => 'تم إنشاء المنتج بنجاح',
+    'product_updated_successfully' => 'تم تحديث المنتج بنجاح',
+    'product_deleted_successfully' => 'تم حذف المنتج بنجاح',
 ];
