@@ -40,11 +40,11 @@
 <body>
     <div class="container">
         <div class="header">
-            <img src="{{ asset('images/download.png') }}" alt="Company Logo" class="logo">
+            {{-- <img src="{{ asset('images/logo.png') }}" alt="Company Logo" class="logo"> --}}
             <h1>Email Verification</h1>
         </div>
         <div class="content">
-            <p>Dear {{ $user->user_name_en }},</p>
+            <p>Dear {{ $user->user_name }},</p>
             <p>Thank you for registering with our service. To complete your registration, please use the following verification code:</p>
             <div class="verification-code">
                 {{ $user->verification_code }}
