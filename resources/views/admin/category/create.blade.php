@@ -1,5 +1,5 @@
-<x-admin-layout>
-
+@extends('layouts.admin.admin-layout')
+@section('content')
     <div class="card bg-light-info shadow-none position-relative overflow-hidden">
         <div class="card-body px-4 py-3">
             <div class="row align-items-center">
@@ -43,4 +43,5 @@
             </form>
         </div>
     </div>
-</x-admin-layout>
+@endsection
+
