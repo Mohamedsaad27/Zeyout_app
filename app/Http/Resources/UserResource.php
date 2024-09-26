@@ -36,6 +36,13 @@ class UserResource extends JsonResource
             ]);
         }
 
+        // Add these lines to ensure the trader data is always included
+        $data['description'] = $this->when($this->type === 'trader' && $this->trader, function () use ($locale) {
+            return $locale == 'ar' ? $this->trader->description_ar : $this->trader->description_en;
+        });
+        $data['FacebookURL'] = $this->when($this->type === 'trader' && $this->trader, $this->trader->FacebookURL);
+        $data['InstagramURL'] = $this->when($this->type === 'trader' && $this->trader, $this->trader->InstagramURL);
+
         return $data;
     }
 }
