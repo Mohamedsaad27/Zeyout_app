@@ -33,4 +33,5 @@ return [
     'brand_created_successfully' => 'Brand created successfully',
     'brand_updated_successfully' => 'Brand updated successfully',
     'brand_deleted_successfully' => 'Brand deleted successfully',
+    'no_brands' => 'No brands found',
 ];

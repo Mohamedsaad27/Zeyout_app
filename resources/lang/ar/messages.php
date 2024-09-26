@@ -39,4 +39,7 @@ return [
     'product_updated_successfully' => 'تم تحديث المنتج بنجاح',
     'product_deleted_successfully' => 'تم حذف المنتج بنجاح',
     'email_already_exists' => 'البريد الإلكتروني مسجل لدينا.',
+    'brands_retrieved_successfully' => 'تم جلب العلامات التجارية بنجاح',
+    'brand_retrieved_successfully' => 'تم جلب العلامة التجارية بنجاح',
+    'no_brands' => 'لم يتم العثور على علامات تجارية',
 ];
