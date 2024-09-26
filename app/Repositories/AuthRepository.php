@@ -29,9 +29,12 @@ class AuthRepository implements AuthRepositoryInterface
     public function __construct(private EmailVerificationService $emailVerificationService, private ResetPasswordService $resetPasswordService){
     }
         public function register(RegistrationRequest $registrationRequest)
-        {
+    {
         try {
             $validatedData = $registrationRequest->validated();
+            if (User::where('email', $validatedData['email'])->exists()) {
+                return $this->errorResponse(trans('messages.email_already_exists'), 422);
+            }
             $user = User::create($validatedData);
             if($user){
                 $verificationCode = $this->emailVerificationService->generateVerificationCode($user->email);
@@ -43,7 +46,9 @@ class AuthRepository implements AuthRepositoryInterface
                 return $this->successResponse(['user' => new UserResource($user)], trans('messages.user_created_successfully'), 201);
             }
             return $this->errorResponse([], trans('messages.failed_create_code'), 500);
-        } catch (\Exception $exception) {
+        } catch (\Illuminate\Validation\ValidationException $exception) {
+            return $this->errorResponse($exception->errors(), 422);
+        }catch (\Exception $exception) {
             DB::rollBack();
             return $this->errorResponse($exception->getMessage(), 500);
         }

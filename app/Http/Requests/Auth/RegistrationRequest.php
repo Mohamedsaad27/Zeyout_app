@@ -34,7 +34,7 @@ class RegistrationRequest extends FormRequest
     }
     public function failedValidation(Validator $validator): void
     {
-        throw new HttpResponseException($this->errorResponse($validator->errors()->toArray(),422));
+        throw new HttpResponseException($this->errorResponse($validator->errors(),422));
     }
     
     
