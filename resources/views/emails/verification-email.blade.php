@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email Verification</title>
+    <title>Welcome to Zeyout App</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -23,9 +23,8 @@
         .content {
             padding: 20px;
         }
-        .verification-code {
-            font-size: 24px;
-            font-weight: bold;
+        .welcome-message {
+            font-size: 18px;
             text-align: center;
             margin: 20px 0;
             padding: 10px;
@@ -40,18 +39,18 @@
 <body>
     <div class="container">
         <div class="header">
-            {{-- <img src="{{ asset('images/logo.png') }}" alt="Company Logo" class="logo"> --}}
-            <h1>Email Verification</h1>
+            {{-- <img src="{{ asset('images/logo.png') }}" alt="Zeyout App Logo" class="logo"> --}}
+            <h1>Welcome to Zeyout App</h1>
         </div>
         <div class="content">
             <p>Dear {{ $user->user_name }},</p>
-            <p>Thank you for registering with our service. To complete your registration, please use the following verification code:</p>
-            <div class="verification-code">
-                {{ $user->verification_code }}
+            <p>Thank you for joining Zeyout App! We're excited to have you on board.</p>
+            <div class="welcome-message">
+                Welcome to our community!
             </div>
-            <p>This code will expire in {{ $user->verification_code_expiration }} minutes. Please enter this code on our website to verify your email address.</p>
-            <p>If you didn't request this verification, please ignore this email.</p>
-            <p>Best regards,<br>{{env('APP_NAME')}}</p>
+            <p>We hope you'll enjoy using our app and all the features it has to offer. If you have any questions or need assistance, please don't hesitate to reach out to our support team.</p>
+            <p>Happy exploring!</p>
+            <p>Best regards,<br>The Zeyout App Team</p>
         </div>
     </div>
 </body>
