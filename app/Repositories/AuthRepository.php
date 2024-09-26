@@ -59,10 +59,6 @@ class AuthRepository implements AuthRepositoryInterface
             $credentials = $loginRequest->only(['email', 'password']);
             if (Auth::attempt($credentials)) {
                 $user = Auth::user();
-                if (!$user->is_verified) {
-                    $this->emailVerificationService->sendVerificationEmail($user);
-                    return $this->errorResponse(trans('messages.email_not_verified'), 403);
-                }
                 $token = $user->createToken($loginRequest->userAgent())->plainTextToken;
                 $user['token'] = $token;
                 return $this->successResponse(
