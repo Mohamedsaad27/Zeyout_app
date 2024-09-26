@@ -19,4 +19,9 @@ class CategoryController extends Controller
     {
         return $this->categoryRepository->index();
     }
+
+    public function store(Request $request)
+    {
+        return $this->categoryRepository->store($request);
+    }
 }
