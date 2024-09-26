@@ -39,7 +39,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <img src="{{ asset('assets/images/logo.jpg') }}" alt="Zeyout App Logo" class="logo">
+            <img src="{{ asset('assets/images/categories/zyout1-01.png') }}" alt="Zeyout App Logo" class="logo">
             <h1>Welcome to Zeyout App</h1>
         </div>
         <div class="content">
