@@ -7,14 +7,14 @@
                     <h4 class="fw-semibold mb-8">Clinics</h4>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a class="text-muted" href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item" aria-current="page">Clinics</li>
+                            <li class="breadcrumb-item"><a class="text-muted" href="{{ route('dashboard.index') }}">Dashboard</a></li>
+                            <li class="breadcrumb-item" aria-current="page">Categories</li>
                         </ol>
                     </nav>
                 </div>
                 <div class="col-3">
                     <div class="text-center mb-n5">
-                        <a href="{{ route('clinics.create') }}" class="btn btn-primary">Add New Clinic</a>
+                        <a href="{{ route('categories.create') }}" class="btn btn-primary">Add New Category</a>
                     </div>
                 </div>
             </div>
