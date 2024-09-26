@@ -31,8 +31,8 @@ class UserResource extends JsonResource
         if ($this->type === 'trader' && $this->trader) {
             $data = array_merge($data, [
                 'description' => $locale == 'ar' ? $this->trader->description_ar : $this->trader->description_en,
-                'FacebookURL' => $this->trader->FacebookURL,
-                'InstagramURL' => $this->trader->InstagramURL,
+                'FacebookURL' => $this->trader->FacebookURL ?? null,
+                'InstagramURL' => $this->trader->InstagramURL ?? null,
             ]);
         }
 
@@ -40,8 +40,12 @@ class UserResource extends JsonResource
         $data['description'] = $this->when($this->type === 'trader' && $this->trader, function () use ($locale) {
             return $locale == 'ar' ? $this->trader->description_ar : $this->trader->description_en;
         });
-        $data['FacebookURL'] = $this->when($this->type === 'trader' && $this->trader, $this->trader->FacebookURL);
-        $data['InstagramURL'] = $this->when($this->type === 'trader' && $this->trader, $this->trader->InstagramURL);
+        $data['FacebookURL'] = $this->when($this->type === 'trader' && $this->trader, function () {
+            return $this->trader->FacebookURL ?? null;
+        });
+        $data['InstagramURL'] = $this->when($this->type === 'trader' && $this->trader, function () {
+            return $this->trader->InstagramURL ?? null;
+        });
 
         return $data;
     }
