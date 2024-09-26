@@ -30,13 +30,14 @@ class AuthRepository implements AuthRepositoryInterface
     }
         public function register(RegistrationRequest $registrationRequest)
         {
-            try {
-                $validatedData = $registrationRequest->validated();
+        try {
+            $validatedData = $registrationRequest->validated();
             $user = User::create($validatedData);
-
             if($user){
-                $this->emailVerificationService->generateVerificationCode($user->email);
-                $this->emailVerificationService->sendVerificationEmail($user);
+                $verificationCode = $this->emailVerificationService->generateVerificationCode($user->email);
+                if($verificationCode){
+                    $this->emailVerificationService->sendVerificationEmail($user);
+                }
                 $token = $user->createToken($registrationRequest->userAgent())->plainTextToken;
                 $user['token'] = $token;
                 return $this->successResponse(['user' => new UserResource($user)], trans('messages.user_created_successfully'), 201);
