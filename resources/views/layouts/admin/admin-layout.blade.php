@@ -29,9 +29,9 @@
             <!--  Header End -->
 
             {{-- Start Content --}}
-            {{-- <div class="container-fluid">
-                {{ $slot }}
-            </div> --}}
+            <div class="container-fluid">
+                @yield('content')
+            </div>
             {{-- End Content --}}
 
         </div>
