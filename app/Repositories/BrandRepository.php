@@ -2,11 +2,11 @@
 
 namespace App\Repositories;
 
-use App\Http\Resources\BrandResource;
-use App\Interfaces\BrandRepositoryInterface;
 use App\Models\Brand;
 use App\Traits\HandleApiResponse;
-use Illuminate\Container\Attributes\DB;
+use Illuminate\Support\Facades\DB;
+use App\Http\Resources\BrandResource;
+use App\Interfaces\BrandRepositoryInterface;
 
 class BrandRepository implements BrandRepositoryInterface
 {
