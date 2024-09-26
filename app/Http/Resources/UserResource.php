@@ -18,7 +18,7 @@ class UserResource extends JsonResource
         $locale = $request->header('Accept-Language');
         $data = [
             'id' => $this->id,
-            'user_name' => $locale == 'en' ? $this->user_name_en : $this->user_name_ar,
+            'user_name' => $this->user_name,
             'email' => $this->email,
             'country' => $this->country,
             'phone_number' => $this->phone_number,
@@ -30,8 +30,7 @@ class UserResource extends JsonResource
 
         if ($this->type === 'trader' && $this->trader) {
             $data = array_merge($data, [
-                'description_ar' => $this->trader->description_ar,
-                'description_en' => $this->trader->description_en,
+                'description' => $locale == 'ar' ? $this->trader->description_ar : $this->trader->description_en,
                 'FacebookURL' => $this->trader->FacebookURL,
                 'InstagramURL' => $this->trader->InstagramURL,
             ]);

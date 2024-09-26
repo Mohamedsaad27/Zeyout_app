@@ -28,52 +28,30 @@ class AuthRepository implements AuthRepositoryInterface
     use HandleApiResponse;
     public function __construct(private EmailVerificationService $emailVerificationService, private ResetPasswordService $resetPasswordService){
     }
-        public function register(Request $registrationRequest)
+        public function register(RegistrationRequest $registrationRequest)
         {
-            $validator = Validator::make($registrationRequest->all(), [
-                'user_name_en' => 'required|string|max:50',
-                'user_name_ar' => 'required|string|max:50',
-                'email' => 'required|string|email|max:255|unique:users',
-                'password' => 'required|string|min:8|confirmed',
-                'country' => 'nullable|string',
-                'phone_number' => 'nullable|string|max:20',
-                'birth_date' => 'nullable|date',
-                'profile_image' => 'nullable|string',
-                'type' => 'required|in:trader,consumer'
-            ]);
-    
-            if ($validator->fails()) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Validation error',
-                    'errors' => $validator->errors()
-                ], 422);
+            try {
+                $validatedData = $registrationRequest->validated();
+                DB::beginTransaction();
+            $user = User::create($validatedData);
+
+            if($user){
+                $verificationCode = $this->emailVerificationService->generateVerificationCode($user->email);
             }
-    
-            // Create user
-            $user = User::create([
-                'user_name_en' => $registrationRequest->user_name_en,
-                'user_name_ar' => $registrationRequest->user_name_ar,
-                'email' => $registrationRequest->email,
-                'password' => Hash::make($registrationRequest->password),
-                'country' => $registrationRequest->country,
-                'phone_number' => $registrationRequest->phone_number,
-                'birth_date' => $registrationRequest->birth_date,
-                'profile_image' => $registrationRequest->profile_image,
-                'type' => $registrationRequest->type,
-            ]);
-    
-            // Generate verification code and send email
-            $verificationCode = $this->emailVerificationService->generateVerificationCode($user->email);
             
             if ($verificationCode) {
                 $this->emailVerificationService->sendVerificationEmail($user);
+                $token = $user->createToken($registrationRequest->userAgent())->plainTextToken;
+                $user['token'] = $token;
                 return $this->successResponse(['user' => new UserResource($user)], trans('messages.user_created_successfully'), 201);
             }
-    
+            DB::commit();
             return $this->errorResponse([], trans('messages.failed_create_code'), 500);
-
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return $this->errorResponse($exception->getMessage(), 500);
         }
+    }
 
     public function login(LoginRequest $loginRequest){
         try {

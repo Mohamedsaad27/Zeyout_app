@@ -3,10 +3,10 @@
 namespace App\Http\Requests\Auth;
 
 use App\Traits\HandleApiResponse;
+
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
-
 class RegistrationRequest extends FormRequest
 {
     use HandleApiResponse;
@@ -26,15 +26,15 @@ class RegistrationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_name_en' => 'required|string|max:255',
-            'user_name_ar' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
+            'user_name' => 'required|string|max:50',
+            'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
+            'type' => 'required|in:trader,consumer'
         ];
     }
     public function failedValidation(Validator $validator): void
     {
-        throw new HttpResponseException($this->errorResponse($validator->errors(),422));
+        throw new HttpResponseException($this->errorResponse($validator->errors()->toArray(),422));
     }
     
     

@@ -15,7 +15,7 @@ use App\Http\Requests\Auth\SendResetPasswordCodeRequest;
 interface AuthRepositoryInterface
 {
     public function login(LoginRequest $loginRequest);
-    public function register(Request $registrationRequest);
+    public function register(RegistrationRequest $registrationRequest);
     public function logout(Request $request);
     public function profile(Request $request);
     public function resetPassword(ResetPasswordRequest $resetPasswordRequest);

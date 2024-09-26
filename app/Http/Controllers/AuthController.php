@@ -20,7 +20,7 @@ class AuthController extends Controller
     public function __construct(AuthRepositoryInterface $authRepository){
         $this->authRepository = $authRepository;
     }
-    public function register(Request $request){
+    public function register(RegistrationRequest $request){
         return $this->authRepository->register($request);
     }
     public function login(LoginRequest $request){
