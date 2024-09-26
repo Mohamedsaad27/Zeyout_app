@@ -32,20 +32,15 @@ class AuthRepository implements AuthRepositoryInterface
         {
             try {
                 $validatedData = $registrationRequest->validated();
-                DB::beginTransaction();
             $user = User::create($validatedData);
 
             if($user){
-                $verificationCode = $this->emailVerificationService->generateVerificationCode($user->email);
-            }
-            
-            if ($verificationCode) {
+                $this->emailVerificationService->generateVerificationCode($user->email);
                 $this->emailVerificationService->sendVerificationEmail($user);
                 $token = $user->createToken($registrationRequest->userAgent())->plainTextToken;
                 $user['token'] = $token;
                 return $this->successResponse(['user' => new UserResource($user)], trans('messages.user_created_successfully'), 201);
             }
-            DB::commit();
             return $this->errorResponse([], trans('messages.failed_create_code'), 500);
         } catch (\Exception $exception) {
             DB::rollBack();
