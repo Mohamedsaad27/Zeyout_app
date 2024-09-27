@@ -42,4 +42,8 @@ return [
     'brands_retrieved' => 'تم جلب العلامات التجارية بنجاح',
     'brand_retrieved' => 'تم جلب العلامة التجارية بنجاح',
     'no_brands' => 'لم يتم العثور على علامات تجارية',
+    'products_retrieved' => 'تم جلب المنتجات بنجاح',
+    'no_products' => 'لم يتم العثور على منتجات',
+    'product_not_found' => 'لم يتم العثور على المنتج',
+    'product_retrieved' => 'تم جلب المنتج بنجاح',
 ];

@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Trader;
 use Illuminate\Http\Request;
 use App\Traits\HandleApiResponse;
 use Illuminate\Support\Facades\DB;
@@ -28,7 +29,7 @@ class AuthRepository implements AuthRepositoryInterface
     use HandleApiResponse;
     public function __construct(private EmailVerificationService $emailVerificationService, private ResetPasswordService $resetPasswordService){
     }
-        public function register(RegistrationRequest $registrationRequest)
+    public function register(RegistrationRequest $registrationRequest)
     {
         try {
             $validatedData = $registrationRequest->validated();
@@ -36,6 +37,11 @@ class AuthRepository implements AuthRepositoryInterface
                 return $this->errorResponse(trans('messages.email_already_exists'), 422);
             }
             $user = User::create($validatedData);
+            if($user->type == 'trader'){
+                Trader::create([
+                    'user_id' => $user->id,
+                ]);
+            }
             if($user){
                 $verificationCode = $this->emailVerificationService->generateVerificationCode($user->email);
                 if($verificationCode){
@@ -46,8 +52,6 @@ class AuthRepository implements AuthRepositoryInterface
                 return $this->successResponse(['user' => new UserResource($user)], trans('messages.user_created_successfully'), 201);
             }
             return $this->errorResponse([], trans('messages.failed_create_code'), 500);
-        } catch (\Illuminate\Validation\ValidationException $exception) {
-            return $this->errorResponse($exception->errors(), 422);
         }catch (\Exception $exception) {
             DB::rollBack();
             return $this->errorResponse($exception->getMessage(), 500);
@@ -56,18 +60,21 @@ class AuthRepository implements AuthRepositoryInterface
 
     public function login(LoginRequest $loginRequest){
         try {
+            $validatedData = $loginRequest->validated();
             $credentials = $loginRequest->only(['email', 'password']);
             if (Auth::attempt($credentials)) {
                 $user = Auth::user();
                 $token = $user->createToken($loginRequest->userAgent())->plainTextToken;
                 $user['token'] = $token;
                 return $this->successResponse(
-                    ['user' => new UserResource($user)],trans('messages.login_successful'),200);
-            }else{
-                return $this->errorResponse(trans('messages.invalid_credentials'),401);
+                    ['user' => new UserResource($user)], trans('messages.login_successful'), 200);
+            } else {
+                return $this->errorResponse(trans('messages.invalid_credentials'), 401);
             }
-        }catch (\Exception $exception){
-            return $this->errorResponse($exception->getMessage(),500);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->errorResponse(trans('validation.validation_errors'), 422, $e->errors());
+        } catch (\Exception $exception) {
+            return $this->errorResponse($exception->getMessage(), 500);
         }
     }
 

@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('traders', function (Blueprint $table) {
             $table->id();
-            $table->text('description_ar');
-            $table->text('description_en');
-            $table->string('FacebookURL');
-            $table->string('InstagramURL');
+            $table->text('description_ar')->nullable();
+            $table->text('description_en')->nullable();
+            $table->string('FacebookURL')->nullable();
+            $table->string('InstagramURL')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();

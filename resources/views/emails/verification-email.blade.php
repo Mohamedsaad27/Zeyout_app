@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Zeyout App</title>
+    <title>Welcome to Zyout App</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -39,18 +39,18 @@
 <body>
     <div class="container">
         <div class="header">
-            <img src="{{ asset('assets/images/categories/zyout1-01.png') }}" alt="Zeyout App Logo" class="logo">
-            <h1>Welcome to Zeyout App</h1>
+            <img src="{{ asset('assets/images/categories/zyout1-01.png') }}" alt="Zyout App Logo" class="logo">
+            <h1>Welcome to Zyout App</h1>
         </div>
         <div class="content">
             <p>Dear {{ $user->user_name }},</p>
-            <p>Thank you for joining Zeyout App! We're excited to have you on board.</p>
+            <p>Thank you for joining Zyout App! We're excited to have you on board.</p>
             <div class="welcome-message">
                 Welcome to our community!
             </div>
             <p>We hope you'll enjoy using our app and all the features it has to offer. If you have any questions or need assistance, please don't hesitate to reach out to our support team.</p>
             <p>Happy exploring!</p>
-            <p>Best regards,<br>The Zeyout App Team</p>
+            <p>Best regards,<br>The Zyout App Team</p>
         </div>
     </div>
 </body>

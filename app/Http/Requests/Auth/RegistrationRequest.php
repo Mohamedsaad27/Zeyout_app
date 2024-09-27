@@ -9,7 +9,6 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 class RegistrationRequest extends FormRequest
 {
-    use HandleApiResponse;
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -32,9 +31,13 @@ class RegistrationRequest extends FormRequest
             'type' => 'required|in:trader,consumer'
         ];
     }
-    public function failedValidation(Validator $validator): void
+    public function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException($this->errorResponse($validator->errors(),422));
+       throw new HttpResponseException(response()->json([
+         'success'   => false,
+         'message'   => 'Validation errors',
+         'data'      => $validator->errors()
+       ],422));
     }
     
     

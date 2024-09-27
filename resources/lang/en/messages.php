@@ -34,4 +34,8 @@ return [
     'brand_updated_successfully' => 'Brand updated successfully',
     'brand_deleted_successfully' => 'Brand deleted successfully',
     'no_brands' => 'No brands found',
+    'products_retrieved' => 'Products retrieved successfully',
+    'no_products' => 'No products found',
+    'product_not_found' => 'Product not found',
+    'product_retrieved' => 'Product retrieved successfully',
 ];
