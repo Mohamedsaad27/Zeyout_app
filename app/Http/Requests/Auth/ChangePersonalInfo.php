@@ -22,12 +22,12 @@ class ChangePersonalInfo extends FormRequest
     public function rules(): array
     {
         return [
-            'user_name_en' => 'required|string|min:3|max:255',
-            'user_name_ar' => 'required|string|min:3|max:255',
-            'country' => 'required|string|min:3|max:255',
-            'phone_number' => 'required|string|min:3|max:255',
-            'birth_date' => 'required|date',
-            'profile_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'user_name' => 'nullable|string|min:3|max:255',
+            'country' => 'nullable|string|min:3|max:255',
+            'phone_number' => 'nullable|string|min:3|max:255',
+            'birth_date' => 'nullable|date',
+            'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'type' => 'nullable|in:trader,consumer'
         ];
     }
 }

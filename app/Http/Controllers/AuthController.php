@@ -12,6 +12,7 @@ use App\Http\Requests\Auth\SendResetPasswordCodeRequest;
 use App\Http\Requests\Auth\ResetPasswordRequest;
 use App\Http\Requests\Auth\VerifyEmailRequest;
 use App\Http\Requests\Auth\ChangePasswordRequest;
+use App\Http\Requests\Auth\ChangePersonalInfo;
 use App\Http\Requests\Auth\VerifyResetPasswordCodeRequest;
 
 class AuthController extends Controller
@@ -52,6 +53,10 @@ class AuthController extends Controller
     }
     public function resendRegistrationCode(Request $request){
         return $this->authRepository->resendRegistrationCode($request);
+    }
+    public function changePersonalInfo(ChangePersonalInfo $changePersonalInfo){
+        return $this->authRepository->changePersonalInfo($changePersonalInfo);
+
     }
 
 }
