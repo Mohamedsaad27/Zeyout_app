@@ -38,4 +38,9 @@ return [
     'no_products' => 'No products found',
     'product_not_found' => 'Product not found',
     'product_retrieved' => 'Product retrieved successfully',
+    'product_added_to_favorite' => 'Product added to favorite',
+    'product_removed_from_favorite' => 'Product removed from favorite',
+    'products_retrieved_from_favorite' => 'Products retrieved successfully from favorite',
+    'product_not_in_favorite' => 'Product not in favorite',
+    'product_already_in_favorite' => ' Product already in favorite ',
 ];

@@ -23,10 +23,12 @@ use App\Http\Requests\Auth\ResetPasswordRequest;
 use App\Http\Requests\Auth\ChangePasswordRequest;
 use App\Http\Requests\Auth\ForgotPasswordRequest;
 use App\Http\Requests\Auth\SendResetPasswordCodeRequest;
+use App\Traits\HandleImages;
+
 
 class AuthRepository implements AuthRepositoryInterface
 {
-    use HandleApiResponse;
+    use HandleApiResponse,HandleImages;
     public function __construct(private EmailVerificationService $emailVerificationService, private ResetPasswordService $resetPasswordService){
     }
     public function register(RegistrationRequest $registrationRequest)
@@ -218,14 +220,9 @@ class AuthRepository implements AuthRepositoryInterface
     public function changePersonalInfo(ChangePersonalInfo $changePersonalInfoRequest) {
         try {
             $validatedData = $changePersonalInfoRequest->validated();
-            if ($changePersonalInfoRequest->hasFile('profile_image')) {
-                $image = $changePersonalInfoRequest->file('profile_image');
-                $imageName = time().'.'.$image->getClientOriginalExtension();
-                $imagePath = 'assets/images/users/'.$imageName;
-                $image->move(public_path('assets/images/users/'), $imageName);
-    
-                // Use asset() to generate the correct URL
-                $validatedData['profile_image'] = asset($imagePath);
+            if($changePersonalInfoRequest->hasFile('profile_image')){
+                $imagePath = $this->uploadImage($validatedData['profile_image'], 'users');
+                $validatedData['profile_image'] = config('app.url') . '/' . $imagePath;
             }
             $user = Auth::user();
             $user->update($validatedData);

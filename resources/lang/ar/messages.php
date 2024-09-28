@@ -17,7 +17,6 @@ return [
     'reset_password_code_verified_successfully' => 'تم تأكيد رمز إعادة تعيين كلمة المرور بنجاح',
     'email_already_verified' => 'البريد الإلكتروني مؤكد من قبل',
     'email_verified_successfully' => 'تم تأكيد البريد الإلكتروني بنجاح',
-    'resend_registration_code_successfully' => 'تم إعادة إرسال رمز التسجيل بنجاح',
     'current_password_not_correct' => 'كلمة المرور الحالية غير صحيحة',
     'password_changed_successfully' => 'تم تغيير كلمة المرور بنجاح',
     'profile_updated_successfully' => 'تم تحديث الملف الشخصي بنجاح',
@@ -30,7 +29,7 @@ return [
     'no_categories_found' => 'لم يتم العثور على فئات',
     'category_created_successfully' => 'تم إنشاء الفئة بنجاح',
     'category_updated_successfully' => 'تم تحديث الفئة بنجاح',
-    'category_not_found' => 'لم يتم العثور على الفئة',  
+    'category_not_found' => 'لم يتم العثور على الفئة',
     'category_deleted_successfully' => 'تم حذف الفئة بنجاح',
     'brand_created_successfully' => 'تم إنشاء العلامة التجارية بنجاح',
     'brand_updated_successfully' => 'تم تحديث العلامة التجارية بنجاح',
@@ -46,4 +45,9 @@ return [
     'no_products' => 'لم يتم العثور على منتجات',
     'product_not_found' => 'لم يتم العثور على المنتج',
     'product_retrieved' => 'تم جلب المنتج بنجاح',
+    'product_added_to_favorite' => 'تم اضافة المنتج الي المفضلة',
+    'product_removed_from_favorite' => 'تم ازالة المنتج من المفضلة ',
+    'products_retrieved_from_favorite' => 'تم استرجاع المنتجات من المفضلة',
+    'product_not_in_favorite' => 'هذا المنتج غير موجود ف المفضلة ' ,
+    'product_already_in_favorite' => 'هذا المنتج بالفعل داخل المفضلة'
 ];
