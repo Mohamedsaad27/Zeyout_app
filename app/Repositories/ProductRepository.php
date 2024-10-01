@@ -89,7 +89,7 @@ class ProductRepository implements ProductRepositoryInterface
             $products = $query->paginate(15);
 
             if ($products->isEmpty()) {
-                return $this->errorResponse(trans('messages.no_products_found'), 404);
+                return $this->errorResponse(trans('messages.no_products_foundddddd'), 404);
             }
 
             return $this->successResponse(ProductResource::collection($products), trans('messages.products_found'), 200);
