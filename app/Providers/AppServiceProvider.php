@@ -13,6 +13,8 @@ use App\Interfaces\BrandRepositoryInterface;
 use App\Interfaces\ProductRepositoryInterface;
 use App\Interfaces\CategoryRepositoryInterface;
 use App\Interfaces\FavoriteRepositoryInterface;
+use App\Interfaces\TraderRepositoryInterface;
+use App\Repositories\TraderRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
         $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
         $this->app->bind(FavoriteRepositoryInterface::class, FavoriteRepository::class);
+        $this->app->bind(TraderRepositoryInterface::class, TraderRepository::class);
     }
 
     /**

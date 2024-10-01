@@ -49,5 +49,9 @@ return [
     'product_removed_from_favorite' => 'تم ازالة المنتج من المفضلة ',
     'products_retrieved_from_favorite' => 'تم استرجاع المنتجات من المفضلة',
     'product_not_in_favorite' => 'هذا المنتج غير موجود ف المفضلة ' ,
-    'product_already_in_favorite' => 'هذا المنتج بالفعل داخل المفضلة'
+    'product_already_in_favorite' => 'هذا المنتج بالفعل داخل المفضلة',
+    'no_traders' => 'لا يوجد تجار ',
+    'trades_retrieved' => 'تم استرجاع التجار ',
+    'trader_not_found' => 'هذا التاجر غير موجود',
+    'trader_retrieved' => 'تم استرجاع بيانات التاجر بنجاح',
 ];

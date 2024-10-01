@@ -43,4 +43,8 @@ return [
     'products_retrieved_from_favorite' => 'Products retrieved successfully from favorite',
     'product_not_in_favorite' => 'Product not in favorite',
     'product_already_in_favorite' => ' Product already in favorite ',
+    'no_traders' => 'No traders found',
+    'trades_retrieved' => 'Traders retrieved successfully',
+    'trader_not_found' => 'Trader not found',
+    'trader_retrieved' => 'Trader retrieved successfully',
 ];

@@ -6,4 +6,5 @@ interface ProductRepositoryInterface
 {   
     public function getAllProducts();
     public function getProductById($productId);
+    public function filterProducts($filterCriteria);
 }
