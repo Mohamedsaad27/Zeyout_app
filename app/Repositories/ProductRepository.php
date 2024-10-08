@@ -28,13 +28,11 @@ class ProductRepository implements ProductRepositoryInterface
     public function getProductById($productId)
     {
         try {
-            $product = Product::query()
-                ->with('favorites', 'product_variants')
-                ->find($productId);
+            $product = Product::with('favorites', 'product_variants')->find($productId);
             if(!$product){
                 return $this->errorResponse(trans('messages.product_not_found'), 404);
             }
-            return $this->successResponse(new ProductResource($product), trans('messages.product_retrieved'), 200);
+            return $this->successResponse(ProductResource::make($product), trans('messages.product_retrieved'), 200);
         } catch (\Exception $exception) {
             return $this->errorResponse($exception->getMessage(), 500);
         }
