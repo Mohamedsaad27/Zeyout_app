@@ -12,28 +12,28 @@ class ProductResource extends JsonResource
 {
     
     public function toArray(Request $request)
-    {
-        $isFavorite = Favorite::where('product_id', $this->id)
-                        ->where('user_id', auth()->id())
-                        ->exists();
-        $locale = $request->header('Accept-Language');
-        $data = [
-            'id' => $this->id,
-            'name' => $locale == 'ar' ? $this->name_ar : $this->name_en,
-            'description' => $locale == 'ar' ? $this->description_ar : $this->description_en,
-            'image' => $this->image,
-            'is_favorite' => $isFavorite,
-            'product_variants' => ProductVariantResource::collection($this->product_variants),
-            'categories' => $locale == 'ar' ? $this->category->pluck('name_ar') : $this->category->pluck('name_en'),
-            'brand' => $locale == 'ar' ? $this->brand->name_ar : $this->brand->name_en,
-            'API' => $this->API,
-        ];
+{
+    $isFavorite = $this->favorites()->where('user_id', auth()->id())->exists();
+    $locale = $request->header('Accept-Language');
+    
+    $data = [
+        'id' => $this->id,
+        'name' => $locale == 'ar' ? $this->name_ar : $this->name_en,
+        'description' => $locale == 'ar' ? $this->description_ar : $this->description_en,
+        'image' => $this->image,
+        'is_favorite' => $isFavorite,
+        'product_variants' => ProductVariantResource::collection($this->product_variants),
+        'categories' => $this->category ? ($locale == 'ar' ? $this->category->pluck('name_ar') : $this->category->pluck('name_en')) : [],
+        'brand' => $this->brand ? ($locale == 'ar' ? $this->brand->name_ar : $this->brand->name_en) : null,
+        'API' => $this->API,
+    ];
 
-        if ($request->route('id')) {
-            $relatedProducts = $this->relatedProducts()->take(5)->get();
-            $data['related_products'] = ProductResource::collection($relatedProducts);
-        }
-
-        return $data;
+    if ($request->route('id')) {
+        $relatedProducts = $this->relatedProducts()->take(5)->get();
+        $data['related_products'] = ProductResource::collection($relatedProducts->except('related_products'));  // Prevent circular load
     }
+
+    return $data;
+}
+
 }
