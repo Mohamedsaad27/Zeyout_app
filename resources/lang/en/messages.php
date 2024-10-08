@@ -48,5 +48,6 @@ return [
     'trader_not_found' => 'Trader not found',
     'trader_retrieved' => 'Trader retrieved successfully',
     'products_found' => 'Products found',
-    'no_products_found' => 'No products found'
+    'no_products_found' => 'No products found',
+    'regions_retrieved' => 'Regions retrieved successfully',
 ];

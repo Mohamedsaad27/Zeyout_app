@@ -45,3 +45,4 @@ Route::prefix('traders')->middleware(['auth:sanctum', 'localization'])->group(fu
 });
 
 Route::get('/filter', [ProductController::class, 'filterProducts'])->middleware('localization');
+Route::get('/regions', [ProductController::class, 'getRegions'])->middleware('localization');

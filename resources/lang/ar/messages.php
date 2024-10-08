@@ -54,4 +54,5 @@ return [
     'trades_retrieved' => 'تم استرجاع التجار ',
     'trader_not_found' => 'هذا التاجر غير موجود',
     'trader_retrieved' => 'تم استرجاع بيانات التاجر بنجاح',
+    'regions_retrieved' => 'تم استرجاع المناطق بنجاح',
 ];

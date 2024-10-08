@@ -23,5 +23,9 @@ class ProductController extends Controller
     {
         return $this->productRepository->filterProducts($request);
     }
+    public function getRegions()
+    {
+        return $this->productRepository->getRegions();
+    }
 }
 
