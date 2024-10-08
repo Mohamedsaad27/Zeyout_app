@@ -17,8 +17,8 @@ class SingleProductResource extends JsonResource
         $locale = $request->header('Accept-Language');
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'description' => $this->description,
+            'name' => $locale == 'ar' ? $this->name_ar : $this->name_en,
+            'description' => $locale == 'ar' ? $this->description_ar : $this->description_en,
             'image' => $this->image,
             'is_favorite' => $this->favorites()->where('user_id', auth()->id())->exists(),
             'product_variants' => ProductVariantResource::collection($this->product_variants),
