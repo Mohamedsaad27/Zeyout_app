@@ -44,4 +44,4 @@ Route::prefix('traders')->middleware(['auth:sanctum', 'localization'])->group(fu
     Route::get('/search', [TraderController::class, 'searchOnTraders']);
 });
 
-Route::get('products/filter', [ProductController::class, 'filterProducts'])->middleware('localization');
+Route::get('/filter', [ProductController::class, 'filterProducts'])->middleware('localization');
