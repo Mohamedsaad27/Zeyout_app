@@ -20,16 +20,7 @@ class ProductController extends Controller
     }
     public function filterProducts(Request $request)
     {
-        $filters = [
-            'category_name_en' => $request->query('category_name_en'),
-            'brand_name_en'    => $request->query('brand_name_en'),
-            'size'             => $request->query('size'),
-            'mileage'          => $request->query('mileage'),
-            'API'              => $request->query('API'),
-            'min_price'        => $request->query('min_price'),
-            'max_price'        => $request->query('max_price'),
-        ];
-        return $this->productRepository->filterProducts($filters);
+        return $this->productRepository->filterProducts($request);
     }
 
 }

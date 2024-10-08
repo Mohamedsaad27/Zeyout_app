@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Traits\HandleApiResponse;
 use App\Http\Resources\ProductResource;
 use App\Interfaces\ProductRepositoryInterface;
+use Illuminate\Http\Request;
 
 class ProductRepository implements ProductRepositoryInterface
 {
@@ -38,60 +39,59 @@ class ProductRepository implements ProductRepositoryInterface
             return $this->errorResponse($exception->getMessage(), 500);
         }
     }
-    public function filterProducts($filterCriteria)
+    public function filterProducts(Request $request)
     {
         try {
             $query = Product::query();
 
-            // Filter by category name in English
-            if (!empty($filters['category_name_en'])) {
-                $query->whereHas('category', function ($q) use ($filters) {
-                    $q->where('name_en', $filters['category_name_en']);
+            if ($categoryName = $request->query('category_name_en')) {
+                $query->whereHas('category', function($q) use ($categoryName) {
+                    $q->where('name_en', $categoryName);
                 });
             }
-
-            // Filter by brand name in English
-            if (!empty($filters['brand_name_en'])) {
-                $query->whereHas('brand', function ($q) use ($filters) {
-                    $q->where('name_en', $filters['brand_name_en']);
+    
+            // Filter by brand
+            if ($brandName = $request->query('brand_name_en')) {
+                $query->whereHas('brand', function($q) use ($brandName) {
+                    $q->where('name_en', $brandName);
                 });
             }
-
-            // Filter by size and mileage (from product variants)
-            if (!empty($filters['size']) || !empty($filters['mileage'])) {
-                $query->whereHas('product_variants', function ($q) use ($filters) {
-                    if (!empty($filters['size'])) {
-                        $q->where('size', $filters['size']);
-                    }
-                    if (!empty($filters['mileage'])) {
-                        $q->where('mileage', $filters['mileage']);
-                    }
+    
+            // Filter by size (product variant)
+            if ($size = $request->query('size')) {
+                $query->whereHas('product_variants', function($q) use ($size) {
+                    $q->where('size', $size);
                 });
             }
-
+    
+            // Filter by mileage (product variant)
+            if ($mileage = $request->query('mileage')) {
+                $query->whereHas('product_variants', function($q) use ($mileage) {
+                    $q->where('mileage', $mileage);
+                });
+            }
+    
             // Filter by API
-            if (!empty($filters['API'])) {
-                $query->where('API', $filters['API']);
+            if ($API = $request->query('API')) {
+                $query->where('API', $API);
             }
-
-            // Filter by price range (from product variants)
-            if (!empty($filters['min_price']) || !empty($filters['max_price'])) {
-                $query->whereHas('product_variants', function ($q) use ($filters) {
-                    if (!empty($filters['min_price'])) {
-                        $q->where('unit_price', '>=', $filters['min_price']);
-                    }
-                    if (!empty($filters['max_price'])) {
-                        $q->where('unit_price', '<=', $filters['max_price']);
-                    }
+    
+            // Filter by price range
+            if ($minPrice = $request->query('min_price')) {
+                $query->whereHas('product_variants', function($q) use ($minPrice) {
+                    $q->where('unit_price', '>=', $minPrice);
                 });
             }
-
-            $products = $query->paginate(15);
-
+    
+            if ($maxPrice = $request->query('max_price')) {
+                $query->whereHas('product_variants', function($q) use ($maxPrice) {
+                    $q->where('unit_price', '<=', $maxPrice);
+                });
+            }
+            $products = $query->get();
             if ($products->isEmpty()) {
                 return $this->errorResponse(trans('messages.no_products_found'), 404);
             }
-
             return $this->successResponse(ProductResource::collection($products), trans('messages.products_found'), 200);
         } catch (\Exception $exception) {
             return $this->errorResponse($exception->getMessage(), 500);
