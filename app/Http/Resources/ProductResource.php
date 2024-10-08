@@ -28,11 +28,7 @@ class ProductResource extends JsonResource
         'API' => $this->API,
     ];
 
-    if ($request->route('id')) {
-        $relatedProducts = $this->relatedProducts()->take(5)->get();
-        $data['related_products'] = ProductResource::collection($relatedProducts->except('related_products'));  // Prevent circular load
-    }
-
+   
     return $data;
 }
 

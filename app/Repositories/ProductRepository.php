@@ -3,10 +3,11 @@
 namespace App\Repositories;
 
 use App\Models\Product;
+use Illuminate\Http\Request;
 use App\Traits\HandleApiResponse;
 use App\Http\Resources\ProductResource;
+use App\Http\Resources\SingleProductResource;
 use App\Interfaces\ProductRepositoryInterface;
-use Illuminate\Http\Request;
 
 class ProductRepository implements ProductRepositoryInterface
 {
@@ -32,7 +33,7 @@ class ProductRepository implements ProductRepositoryInterface
             if(!$product){
                 return $this->errorResponse(trans('messages.product_not_found'), 404);
             }
-            return $this->successResponse(ProductResource::make($product), trans('messages.product_retrieved'), 200);
+            return $this->successResponse(SingleProductResource::make($product), trans('messages.product_retrieved'), 200);
         } catch (\Exception $exception) {
             return $this->errorResponse($exception->getMessage(), 500);
         }
