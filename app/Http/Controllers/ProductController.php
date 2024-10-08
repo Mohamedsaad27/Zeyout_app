@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Interfaces\ProductRepositoryInterface;
 
@@ -22,6 +23,5 @@ class ProductController extends Controller
     {
         return $this->productRepository->filterProducts($request);
     }
-
 }
 

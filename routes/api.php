@@ -30,7 +30,6 @@ Route::prefix('brands')->middleware('localization')->group(function () {
 Route::prefix('products')->middleware(['auth:sanctum', 'localization'])->group(function () {
     Route::get('/', [ProductController::class, 'getAllProducts']);
     Route::get('/{id}', [ProductController::class, 'getProductById']);
-    Route::get('/filter', [ProductController::class, 'filterProducts']);
 });
 
 Route::prefix('favorite')->middleware(['auth:sanctum', 'localization'])->group(function () {
@@ -44,3 +43,5 @@ Route::prefix('traders')->middleware(['auth:sanctum', 'localization'])->group(fu
     Route::get('/{id}', [TraderController::class, 'getTraderDetails']);
     Route::get('/search', [TraderController::class, 'searchOnTraders']);
 });
+
+Route::get('/filter', [ProductController::class, 'filterProducts']);

@@ -42,54 +42,8 @@ class ProductRepository implements ProductRepositoryInterface
     public function filterProducts(Request $request)
     {
         try {
-            $query = Product::query();
-
-            if ($categoryName = $request->query('category_name_en')) {
-                $query->whereHas('category', function($q) use ($categoryName) {
-                    $q->where('name_en', $categoryName);
-                });
-            }
-    
-            // Filter by brand
-            if ($brandName = $request->query('brand_name_en')) {
-                $query->whereHas('brand', function($q) use ($brandName) {
-                    $q->where('name_en', $brandName);
-                });
-            }
-    
-            // Filter by size (product variant)
-            if ($size = $request->query('size')) {
-                $query->whereHas('product_variants', function($q) use ($size) {
-                    $q->where('size', $size);
-                });
-            }
-    
-            // Filter by mileage (product variant)
-            if ($mileage = $request->query('mileage')) {
-                $query->whereHas('product_variants', function($q) use ($mileage) {
-                    $q->where('mileage', $mileage);
-                });
-            }
-    
-            // Filter by API
-            if ($API = $request->query('API')) {
-                $query->where('API', $API);
-            }
-    
-            // Filter by price range
-            if ($minPrice = $request->query('min_price')) {
-                $query->whereHas('product_variants', function($q) use ($minPrice) {
-                    $q->where('unit_price', '>=', $minPrice);
-                });
-            }
-    
-            if ($maxPrice = $request->query('max_price')) {
-                $query->whereHas('product_variants', function($q) use ($maxPrice) {
-                    $q->where('unit_price', '<=', $maxPrice);
-                });
-            }
-            $products = $query->get();
-            if ($products->isEmpty()) {
+            $products = Product::filter($request)->get();
+            if($products->isEmpty()){
                 return $this->errorResponse(trans('messages.no_products_found'), 404);
             }
             return $this->successResponse(ProductResource::collection($products), trans('messages.products_found'), 200);
