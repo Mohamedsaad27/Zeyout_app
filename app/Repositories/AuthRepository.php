@@ -238,7 +238,7 @@ class AuthRepository implements AuthRepositoryInterface
                 // Move the file to the public directory
                 $image->move(public_path($imagePath), $imageName);
 
-                // Store only the relative path in the database
+                // Store the path without 'public/storage'
                 $validatedData['profile_image'] = $imagePath . '/' . $imageName;
             }
 

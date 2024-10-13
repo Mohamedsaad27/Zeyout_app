@@ -23,7 +23,7 @@ class UserResource extends JsonResource
             'country' => $this->country,
             'phone_number' => $this->phone_number,
             'birth_date' => Carbon::parse($this->birth_date)->format('d-m-Y'),
-            'profile_image' => $this->profile_image,
+            'profile_image' => $this->profile_image ? url($this->profile_image) : null,
             'type' => $this->type,
             'token' => $this->token,
         ];
