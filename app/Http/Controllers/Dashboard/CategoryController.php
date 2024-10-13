@@ -35,7 +35,7 @@ class CategoryController extends Controller
                 File::makeDirectory(public_path($imagePath), 0755, true, true);
             }
             $image->move(public_path($imagePath), $imageName);
-            $validatedData['logo'] = $imagePath . '/' . $imageName;
+                $validatedData['logo'] = env('URL') . '/' . $imagePath . '/' . $imageName;
         }
         $category = Category::create([
             'name_ar' => $validatedData['name_ar'],
@@ -70,7 +70,7 @@ class CategoryController extends Controller
                     File::makeDirectory(public_path($imagePath), 0755, true, true);
                 }
                 $image->move(public_path($imagePath), $imageName);
-                $validatedData['logo'] = env('APP_URL') . '/' . $imagePath . '/' . $imageName;
+                $validatedData['logo'] = env('URL') . '/' . $imagePath . '/' . $imageName;
         }
         $category->update([
             'name_ar' => $validatedData['name_ar'],
