@@ -220,17 +220,24 @@ class AuthRepository implements AuthRepositoryInterface
     public function changePersonalInfo(ChangePersonalInfo $changePersonalInfoRequest) {
         try {
             $validatedData = $changePersonalInfoRequest->validated();
-            if($changePersonalInfoRequest->hasFile('profile_image')){
-                $imagePath = $this->uploadImage($validatedData['profile_image'], 'users');
-                $validatedData['profile_image'] = config('app.url') . '/' . $imagePath;
-            }
             $user = Auth::user();
-            $user->update($validatedData);
+            if($changePersonalInfoRequest->hasFile('profile_image')){
+                $image = $changePersonalInfoRequest->file('profile_image');
+                $imageName = time().'.'.$image->getClientOriginalExtension();
+                $imagePath = 'uploads/images/users/' . $user->id;
+                if (!file_exists(public_path($imagePath))) {
+                    mkdir(public_path($imagePath), 0755, true);
+                }
+                $image->move(public_path($imagePath), $imageName);
+                $validatedData['profile_image'] = config('app.url') . '/' . $imagePath . '/' . $imageName;
+            }
+            $user->fill($validatedData);
+            $user->save();
             return $this->successResponse(new UserResource($user), trans('messages.profile_updated_successfully'), 200);
         } catch (\Exception $exception) {
             return $this->errorResponse($exception->getMessage(), 500);
         }
     }
-    
+
 
 }
