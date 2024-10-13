@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Env;
 use Illuminate\Support\Facades\File;
 
 class CategoryController extends Controller
@@ -69,7 +70,7 @@ class CategoryController extends Controller
                     File::makeDirectory(public_path($imagePath), 0755, true, true);
                 }
                 $image->move(public_path($imagePath), $imageName);
-                $validatedData['logo'] = asset($imagePath . '/' . $imageName);
+                $validatedData['logo'] = env('APP_URL') . '/' . $imagePath . '/' . $imageName;
         }
         $category->update([
             'name_ar' => $validatedData['name_ar'],
