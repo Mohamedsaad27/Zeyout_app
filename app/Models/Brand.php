@@ -14,13 +14,4 @@ class Brand extends Model
         return $this->hasMany(Product::class);
     }
 
-    public function getLogoAttribute($value)
-    {
-        return $value ? asset('storage/brands/' . $value) : null;
-    }
-
-    public function setLogoAttribute($value)
-    {
-        $this->attributes['logo'] = $value->store('brands', 'public');
-    }
 }
