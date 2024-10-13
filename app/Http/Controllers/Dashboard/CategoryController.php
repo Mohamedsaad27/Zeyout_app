@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 
 class CategoryController extends Controller
 {
@@ -25,16 +26,20 @@ class CategoryController extends Controller
             'name_en' => 'required|string|max:255',
             'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        if ($request->hasFile('logo')) {
-            $logo = $request->file('logo');
-            $logoName = time().'.'.$logo->getClientOriginalExtension();
-            $imagePath = 'images/categories/'.$logoName;
-            $logo->move(public_path('images/categories'), $logoName);
+        if($request->hasFile('logo')){
+            $image = $request->file('logo');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $imagePath = 'uploads/images/categories';
+            if (!File::isDirectory(public_path($imagePath))) {
+                File::makeDirectory(public_path($imagePath), 0755, true, true);
+            }
+            $image->move(public_path($imagePath), $imageName);
+            $validatedData['logo'] = $imagePath . '/' . $imageName;
         }
         $category = Category::create([
             'name_ar' => $validatedData['name_ar'],
             'name_en' => $validatedData['name_en'],
-            'logo' => $imagePath,
+            'logo' => $validatedData['logo'],
         ]);
 
         return redirect()->route('categories.index')->with('success', trans('admin.category_created_successfully'));
@@ -57,15 +62,19 @@ class CategoryController extends Controller
             if ($category->logo && file_exists(public_path($category->logo))) {
                 unlink(public_path($category->logo));
             }
-            $logo = $request->file('logo');
-            $logoName = time().'.'.$logo->getClientOriginalExtension();
-            $imagePath = 'images/categories/'.$logoName;
-            $logo->move(public_path('images/categories'), $logoName);
+                $image = $request->file('logo');
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
+                $imagePath = 'uploads/images/categories';
+                if (!File::isDirectory(public_path($imagePath))) {
+                    File::makeDirectory(public_path($imagePath), 0755, true, true);
+                }
+                $image->move(public_path($imagePath), $imageName);
+                $validatedData['logo'] = asset($imagePath . '/' . $imageName);
         }
         $category->update([
             'name_ar' => $validatedData['name_ar'],
             'name_en' => $validatedData['name_en'],
-            'logo' => $imagePath,
+            'logo' => $validatedData['logo'],
         ]);
         return redirect()->route('categories.index')->with('success',trans('admin.category_updated_successfully'));
     }

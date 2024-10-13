@@ -34,16 +34,7 @@ class CategoryRepository implements CategoryRepositoryInterface
                 'name_en' => 'required|string|max:255',
                 'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]);
-            if($request->hasFile('logo')){
-                $image = $request->file('logo');
-                $imageName = time() . '.' . $image->getClientOriginalExtension();
-                $imagePath = 'uploads/images/categories';
-                if (!File::isDirectory(public_path($imagePath))) {
-                    File::makeDirectory(public_path($imagePath), 0755, true, true);
-                }
-                $image->move(public_path($imagePath), $imageName);
-                $data['logo'] = $imagePath . '/' . $imageName;
-            }
+           $this->handleImages($request);
             $categoryId = DB::table('categories')->insertGetId($data);
             $category = DB::table('categories')->find($categoryId);
             if (!$category) {
@@ -61,10 +52,7 @@ class CategoryRepository implements CategoryRepositoryInterface
                 'name_en' => 'sometimes|required|string|max:255',
                 'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]);
-            if($request->hasFile('logo')){
-                $imagePath = $this->updateImage($data['logo'], 'categories', $category->logo);
-                $data['logo'] = config('app.url') . '/' . $imagePath;
-            }
+            $this->handleImages($request);
             $category->update($data);
             return $this->successResponse(new CategoryResource($category), trans('messages.category_updated_successfully'), 200);
         }catch(\Exception $e){
@@ -80,6 +68,18 @@ class CategoryRepository implements CategoryRepositoryInterface
         }
         catch(\Exception $e){
             return $this->errorResponse($e->getMessage(), 500);
+        }
+    }
+    public function handleImages(Request $request){
+        if($request->hasFile('logo')){
+            $image = $request->file('logo');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $imagePath = 'uploads/images/categories';
+            if (!File::isDirectory(public_path($imagePath))) {
+                File::makeDirectory(public_path($imagePath), 0755, true, true);
+            }
+            $image->move(public_path($imagePath), $imageName);
+            $data['logo'] = $imagePath . '/' . $imageName;
         }
     }
 }
