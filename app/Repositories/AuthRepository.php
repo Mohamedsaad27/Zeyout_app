@@ -10,6 +10,7 @@ use App\Traits\HandleApiResponse;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use App\Services\ResetPasswordService;
 use App\Http\Requests\Auth\LoginRequest;
@@ -230,15 +231,15 @@ class AuthRepository implements AuthRepositoryInterface
                 $imagePath = 'uploads/images/users/' . $user->id;
 
                 // Ensure the directory exists
-                if (!Storage::disk('public')->exists($imagePath)) {
-                    Storage::disk('public')->makeDirectory($imagePath, 0755, true);
+                if (!File::isDirectory(public_path($imagePath))) {
+                    File::makeDirectory(public_path($imagePath), 0755, true, true);
                 }
 
-                // Store the file
-                $path = Storage::disk('public')->putFileAs($imagePath, $image, $imageName);
+                // Move the file to the public directory
+                $image->move(public_path($imagePath), $imageName);
 
-                // Generate the correct URL
-                $validatedData['profile_image'] = Storage::disk('public')->url($path);
+                // Store only the relative path in the database
+                $validatedData['profile_image'] = $imagePath . '/' . $imageName;
             }
 
             $user->fill($validatedData);
