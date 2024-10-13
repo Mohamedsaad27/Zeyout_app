@@ -77,6 +77,7 @@
                         <tr>
                             <th>Category English Name</th>
                             <th>Category Arabic Name</th>
+                            <th>Category Logo</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -91,6 +92,9 @@
                                     </div>
                                 </td>
                                 <td>{{ $category->name_ar }}</td>
+                                <td>
+                                    <img src="{{ $category->logo }}" alt="Category Logo" class="img-fluid" style="max-width: 100px; max-height: 100px;">
+                                </td>
                                 <td>
                                     <div class="action-btn d-flex">
                                         <a href="{{ route('categories.show', $category->id) }}" class="text-info edit me-2">
@@ -111,7 +115,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="text-center">No categories found.</td>
+                                <td colspan="4" class="text-center">No categories found.</td>
                             </tr>
                         @endforelse
                     </tbody>
