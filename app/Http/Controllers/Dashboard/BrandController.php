@@ -12,7 +12,7 @@ class BrandController extends Controller
     public function index()
     {
         $brands = Brand::with('products')->get();
-        return view('admin.brands.index', compact('brands'));
+        return view('admin.brand.index', compact('brands'));
     }
 
     public function create()
@@ -48,7 +48,7 @@ class BrandController extends Controller
     public function edit($id)
     {
         $brand = Brand::find($id);
-        return view('admin.brands.edit', compact('brand'));
+        return view('admin.brand.edit', compact('brand'));
     }
 
     public function update(Request $request, Brand $brand)
