@@ -228,7 +228,7 @@ class AuthRepository implements AuthRepositoryInterface
             if ($changePersonalInfoRequest->hasFile('profile_image')) {
                 $image = $changePersonalInfoRequest->file('profile_image');
                 $imageName = time() . '.' . $image->getClientOriginalExtension();
-                $imagePath = 'storage/uploads/images/users/' . $user->id;
+                $imagePath = 'uploads/images/users/' . $user->id;
 
                 // Ensure the directory exists
                 if (!File::isDirectory(public_path($imagePath))) {
