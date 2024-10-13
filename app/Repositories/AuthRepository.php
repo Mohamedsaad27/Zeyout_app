@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Services\ResetPasswordService;
 use App\Http\Requests\Auth\LoginRequest;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Services\EmailVerificationService;
 use App\Interfaces\AuthRepositoryInterface;
@@ -217,22 +218,32 @@ class AuthRepository implements AuthRepositoryInterface
             return $this->errorResponse($exception->getMessage(), 500);
         }
     }
-    public function changePersonalInfo(ChangePersonalInfo $changePersonalInfoRequest) {
+    public function changePersonalInfo(ChangePersonalInfo $changePersonalInfoRequest)
+    {
         try {
             $validatedData = $changePersonalInfoRequest->validated();
             $user = Auth::user();
-            if($changePersonalInfoRequest->hasFile('profile_image')){
+
+            if ($changePersonalInfoRequest->hasFile('profile_image')) {
                 $image = $changePersonalInfoRequest->file('profile_image');
-                $imageName = time().'.'.$image->getClientOriginalExtension();
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
                 $imagePath = 'uploads/images/users/' . $user->id;
-                if (!file_exists(public_path($imagePath))) {
-                    mkdir(public_path($imagePath), 0755, true);
+
+                // Ensure the directory exists
+                if (!Storage::disk('public')->exists($imagePath)) {
+                    Storage::disk('public')->makeDirectory($imagePath, 0755, true);
                 }
-                $image->move(public_path($imagePath), $imageName);
-                $validatedData['profile_image'] = config('app.url') . '/' . $imagePath . '/' . $imageName;
+
+                // Store the file
+                $path = Storage::disk('public')->putFileAs($imagePath, $image, $imageName);
+
+                // Generate the correct URL
+                $validatedData['profile_image'] = Storage::disk('public')->url($path);
             }
+
             $user->fill($validatedData);
             $user->save();
+
             return $this->successResponse(new UserResource($user), trans('messages.profile_updated_successfully'), 200);
         } catch (\Exception $exception) {
             return $this->errorResponse($exception->getMessage(), 500);
