@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 
 class BrandController extends Controller
 {
@@ -26,16 +27,20 @@ class BrandController extends Controller
             'name_en' => 'required|string|max:255',
             'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        if ($request->hasFile('logo')) {
-            $logo = $request->file('logo');
-            $logoName = time().'.'.$logo->getClientOriginalExtension();
-            $imagePath = 'images/brands/'.$logoName;
-            $logo->move(public_path('images/brands'), $logoName);
+        if($request->hasFile('logo')){
+            $image = $request->file('logo');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $imagePath = 'uploads/images/brands';
+            if (!File::isDirectory(public_path($imagePath))) {
+                File::makeDirectory(public_path($imagePath), 0755, true, true);
+            }
+            $image->move(public_path($imagePath), $imageName);
+                $validatedData['logo'] = env('URL') . '/' . $imagePath . '/' . $imageName;
         }
         $brand = Brand::create([
             'name_ar' => $validatedData['name_ar'],
             'name_en' => $validatedData['name_en'],
-            'logo' => $imagePath,
+            'logo' => $validatedData['logo'],
         ]);
         return redirect()->route('brands.index')->with('success', trans('admin.brand_created_successfully'));
     }
