@@ -19,7 +19,7 @@ class CategoryResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $locale == 'ar' ? $this->name_ar : $this->name_en,
-            'logo' => $this->logo,
+            'logo' => asset($this->logo),
             'created_at' => $this->created_at,
         ];
     }
