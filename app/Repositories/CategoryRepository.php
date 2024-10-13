@@ -7,6 +7,7 @@ use App\Traits\HandleImages;
 use Illuminate\Http\Request;
 use App\Traits\HandleApiResponse;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\CategoryResource;
 use App\Interfaces\CategoryRepositoryInterface;
@@ -34,8 +35,14 @@ class CategoryRepository implements CategoryRepositoryInterface
                 'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]);
             if($request->hasFile('logo')){
-                $imagePath = $this->uploadImage($data['logo'], 'categories');
-                $data['logo'] = config('app.url') . '/' . $imagePath;
+                $image = $request->file('logo');
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
+                $imagePath = 'uploads/images/categories';
+                if (!File::isDirectory(public_path($imagePath))) {
+                    File::makeDirectory(public_path($imagePath), 0755, true, true);
+                }
+                $image->move(public_path($imagePath), $imageName);
+                $data['logo'] = $imagePath . '/' . $imageName;
             }
             $categoryId = DB::table('categories')->insertGetId($data);
             $category = DB::table('categories')->find($categoryId);
