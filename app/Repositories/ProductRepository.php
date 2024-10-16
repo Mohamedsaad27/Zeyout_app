@@ -29,7 +29,7 @@ class ProductRepository implements ProductRepositoryInterface
     public function getProductById($productId)
     {
         try {
-            $product = Product::with(['category', 'brand', 'product_variants', 'favorites'])->find($productId);
+            $product = Product::with(['categories', 'brand', 'product_variants', 'favorites'])->find($productId);
             if(!$product){
                 return $this->errorResponse(trans('messages.product_not_found'), 404);
             }

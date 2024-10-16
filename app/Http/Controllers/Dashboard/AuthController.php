@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Models\Brand;
+use App\Models\Trader;
+use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -10,7 +14,14 @@ class AuthController extends Controller
 {
     public function index()
     {
-        return view('admin.index');
+        $categoriesCount = Category::count();
+        $productsCount = Product::count();
+        $brandsCount = Brand::count();
+        $recentCategories = Category::latest()->take(5)->get();
+        $recentProducts = Product::latest()->take(5)->get();
+        $recentBrands = Brand::latest()->take(5)->get();
+        $recentTraders = Trader::latest()->take(5)->get();
+        return view('admin.index', compact('categoriesCount', 'productsCount', 'brandsCount', 'recentCategories', 'recentProducts', 'recentBrands', 'recentTraders'));
     }
     public function showLoginForm()
     {

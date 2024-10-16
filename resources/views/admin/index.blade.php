@@ -52,7 +52,7 @@
                     <h5 class="card-title">Recent Categories</h5>
                     <ul class="list-group">
                         @forelse($recentCategories ?? [] as $category)
-                            <li class="list-group-item">{{ $category->name }}</li>
+                            <li class="list-group-item">{{ $category->name_ar }}</li>
                         @empty
                             <li class="list-group-item">No recent categories</li>
                         @endforelse
@@ -67,7 +67,7 @@
                     <h5 class="card-title">Recent Products</h5>
                     <ul class="list-group">
                         @forelse($recentProducts ?? [] as $product)
-                            <li class="list-group-item">{{ $product->name }}</li>
+                            <li class="list-group-item">{{ $product->name_ar }}</li>
                         @empty
                             <li class="list-group-item">No recent products</li>
                         @endforelse
@@ -75,6 +75,37 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Recent Brands</h5>
+                    <ul class="list-group">
+                        @forelse($recentBrands ?? [] as $brand)
+                            <li class="list-group-item">{{ $brand->name_ar }}</li>
+                        @empty
+                            <li class="list-group-item">No recent brands</li>
+                        @endforelse
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Recent Traders</h5>
+                    <ul class="list-group">
+                        @forelse($recentTraders ?? [] as $trader)
+                            <li class="list-group-item">{{ $trader->user->user_name }}</li>
+                        @empty
+                            <li class="list-group-item">No recent traders</li>
+                        @endforelse
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
     </div>
 </div>
 @endsection

@@ -14,9 +14,9 @@ class Product extends Model
     public function scopeFilter($query, $request)
     {
         return $query->when($request->query('category_name_en'), function ($query, $category) {
-                $query->whereHas('category', function ($q) use ($category) {
-                    $q->where('name_en', $category);
-                });
+            $query->whereHas('categories', function ($q) use ($category) {
+                $q->where('name_en', $category);
+            });
             })
             ->when($request->query('brand_name_en'), function ($query, $brand) {
                 $query->whereHas('brand', function ($q) use ($brand) {
@@ -62,18 +62,7 @@ class Product extends Model
     {
         return $this->hasMany(Favorite::class);
     }
-
-    public function getImageAttribute($value)
-    {
-        return $value ? asset('storage/products/' . $value) : null;
-    }
-
-    public function setImageAttribute($value)
-    {
-        $this->attributes['image'] = $value->store('products', 'public');
-    }
-
-    public function category()
+    public function categories()
     {
         return $this->belongsToMany(Category::class, 'product_categories', 'product_id', 'category_id');
     }
