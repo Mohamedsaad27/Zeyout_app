@@ -13,24 +13,31 @@ class TraderRepository implements TraderRepositoryInterface
 {
     use HandleApiResponse;
     public function getTraders($governate = null)
-    {
-        try {
-            $traders = User::query()
-                ->where('type','trader')
-                ->when($governate, function ($query, $governate) {
-                    return $query->whereHas('trader', function ($query) use ($governate) {
-                        $query->where('governate_id', $governate);
-                    });
-                })
-                ->paginate(15);
-            if($traders->isEmpty()){
-                return $this->errorResponse(trans('messages.no_traders'), 404);
-            }
-            return $this->successResponse(UserResource::collection($traders), trans('messages.trades_retrieved'), 200);
-        } catch (\Exception $exception) {
-            return $this->errorResponse($exception->getMessage(), 500);
+{
+    try {
+        $query = User::query()->where('type', 'trader');
+
+        if ($governate) {
+            $query->whereHas('trader', function ($query) use ($governate) {
+                $query->where('governate_id', $governate);
+            });
         }
+
+        // Add this line for debugging
+        \Log::info('SQL Query: ' . $query->toSql());
+        \Log::info('Query Bindings: ' . json_encode($query->getBindings()));
+
+        $traders = $query->paginate(15);
+
+        if ($traders->isEmpty()) {
+            return $this->errorResponse(trans('messages.no_traders'), 404);
+        }
+
+        return $this->successResponse(UserResource::collection($traders), trans('messages.trades_retrieved'), 200);
+    } catch (\Exception $exception) {
+        return $this->errorResponse($exception->getMessage(), 500);
     }
+}
     public function getTraderDetails($traderId)
     {
         try {
