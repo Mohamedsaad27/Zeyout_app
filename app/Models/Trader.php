@@ -25,4 +25,8 @@ class Trader extends Model
     {
         return $this->hasMany(Product::class);
     }
+    public function governate()
+    {
+        return $this->belongsTo(Governate::class);
+    }
 }
