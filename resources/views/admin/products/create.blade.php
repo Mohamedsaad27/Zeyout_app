@@ -24,7 +24,7 @@
 
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title mb-4">Create New Brand</h4>
+            <h4 class="card-title mb-4">Create New Product</h4>
             <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">

@@ -4,15 +4,15 @@
         <script>
             @if (Session::has('successCreate'))
                 iziToast.success({
-                    title: 'Success',
+                    title: 'Created',
                     position: 'topRight',
                     message: '{{ Session::get('successCreate') }}',
                 });
             @endif
 
             @if (Session::has('successDelete'))
-                iziToast.success({
-                    title: 'Success',
+                iziToast.error({
+                    title: 'Deleted',
                     position: 'topRight',
                     message: '{{ Session::get('successDelete') }}',
                 });
@@ -27,7 +27,7 @@
             @endif
             @if (Session::has('successUpdate'))
                 iziToast.success({
-                    title: 'Success',
+                    title: 'Updated',
                     position: 'topRight',
                     message: '{{ Session::get('successUpdate') }}',
                 });
@@ -113,9 +113,20 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    @foreach($product->categories as $category)
-                                                        <p>{{ $category->name_en }}</p>
-                                                    @endforeach
+                                                    <table class="table table-striped table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Category English Name</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach($product->categories as $category)
+                                                                <tr>
+                                                                    <td>{{ $category->name_en }}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -159,7 +170,7 @@
                     </tbody>
                 </table>
             <div class="d-flex justify-content-center">
-                {{ $products->links('pagination::bootstrap-5') }}
+                {{ $products->links('pagination::bootstrap-4') }}
             </div>
             </div>
         </div>

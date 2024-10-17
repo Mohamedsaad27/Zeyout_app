@@ -5,15 +5,19 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class BrandResource extends JsonResource
+class GovernateResource extends JsonResource
 {
-    public function toArray(Request $request)
+    /**
+     * Transform the resource into an array.
+     *
+     * @return array<string, mixed>
+     */
+    public function toArray(Request $request): array
     {
         $locale = $request->header('Accept-Language');
         return [
             'id' => $this->id,
             'name' => $locale == 'ar' ? $this->name_ar : $this->name_en,
-            'logo' => env('URL') . $this->logo,
         ];
     }
 }

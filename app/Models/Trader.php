@@ -14,6 +14,7 @@ class Trader extends Model
         'FacebookURL',
         'InstagramURL',
         'user_id',
+        'governate_id',
     ];
 
     public function user()

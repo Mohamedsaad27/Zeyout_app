@@ -59,7 +59,7 @@ class ProductController extends Controller
             $product->product_variants()->create($variant);
         }
 
-        return redirect()->route('products.index')->with('success',trans('messages.product_created_successfully'));
+        return redirect()->route('products.index')->with('successCreate','Product Created Successfully');
     }
     public function edit($id)
     {
@@ -81,10 +81,10 @@ class ProductController extends Controller
             'category_id' => 'required|exists:categories,id',
             'brand_id' => 'required|exists:brands,id',
             'product_variants' => 'required|array',
-            'product_variants.*.size' => 'required|string|max:50',
-            'product_variants.*.mileage' => 'required|string|max:50',
-            'product_variants.*.wholesale_price' => 'required|numeric|min:0',
-            'product_variants.*.unit_price' => 'required|numeric|min:0',
+            'product_variants.*.size' => 'nullable|string|max:50',
+            'product_variants.*.mileage' => 'nullable|string|max:50',
+            'product_variants.*.wholesale_price' => 'nullable|numeric|min:0',
+            'product_variants.*.unit_price' => 'nullable|numeric|min:0',
         ]);
         if ($request->hasFile('image')) {
             if ($product->image && file_exists(public_path($product->image))) {
@@ -97,15 +97,21 @@ class ProductController extends Controller
             $validatedData['image'] = $imagePath;
         }
         $product->update($validatedData);
-        return redirect()->route('products.index')->with('success',trans('messages.product_updated_successfully'));
+        if($request->has('categories')){
+            $product->categories()->sync($request->categories);
+        }
+        return redirect()->route('products.index')->with('successUpdate','Product Updated Successfully');
     }
     public function destroy($id)
     {
         $product = Product::find($id);
-        if ($product->image && file_exists(public_path($product->image))) {
-            unlink(public_path($product->image));   
+        if($product->image){
+            $imagePath = $product->image;
+            if (File::exists(public_path($imagePath))) {
+                File::delete(public_path($imagePath));
+            }
         }
         $product->delete();
-        return redirect()->route('products.index')->with('success',trans('messages.product_deleted_successfully'));
+        return redirect()->route('products.index')->with('successDelete','Product Deleted Successfully');
     }
 }

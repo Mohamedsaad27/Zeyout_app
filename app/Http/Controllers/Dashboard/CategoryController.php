@@ -13,7 +13,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::paginate(30);
         return view('admin.category.index', compact('categories'));
     }
 
@@ -53,10 +53,11 @@ class CategoryController extends Controller
             'name_en' => $validatedData['name_en'],
             'logo' => $validatedData['logo'],
         ]);
+        
         if($category){
-            return redirect()->route('categories.index')->with('successCreate', trans('admin.category_created_successfully'));
+            return redirect()->route('categories.index')->with('successCreate', 'Category Created Successfully');
         }else{
-            return redirect()->route('categories.create')->with('errorCreate', trans('admin.category_created_error'));
+            return redirect()->route('categories.create')->with('errorCreate', 'Category Created Error');
         }
     }
 
@@ -98,12 +99,23 @@ class CategoryController extends Controller
             'name_en' => $validatedData['name_en'],
             'logo' => $validatedData['logo'] ?? $category->logo,
         ]);
-        return redirect()->route('categories.index')->with('success',trans('admin.category_updated_successfully'));
+        return redirect()->route('categories.index')->with('successUpdate', 'Category Updated Successfully');
     }
 
-    public function destroy(Category $category)
-    {
-        $category->delete();
-        return redirect()->route('categories.index')->with('success',trans('admin.category_deleted_successfully'));
-    }
+        public function destroy(Category $category)
+        {
+            try {
+                $category->delete();
+                if($category->logo){
+                    $imagePath = $category->logo;
+                    if (File::exists(public_path($imagePath))) {
+                        File::delete(public_path($imagePath));
+                    }
+                }
+                return redirect()->route('categories.index')->with('successDelete', 'Category Deleted Successfully');
+            } catch (\Exception $e) {
+                Log::error('Category deletion failed: ' . $e->getMessage());
+                return redirect()->route('categories.index')->with('errorDelete', 'لا يمكن حذف الفئة هذه لوجود عناصر مرتبطة بها');
+            }
+        }
 }
