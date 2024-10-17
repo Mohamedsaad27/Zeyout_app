@@ -13,7 +13,7 @@ class BrandResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $locale == 'ar' ? $this->name_ar : $this->name_en,
-            'logo' => env('URL') . $this->logo,
+            'logo' => $this->logo,
         ];
     }
 }
