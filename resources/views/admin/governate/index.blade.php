@@ -93,9 +93,6 @@
                                 <td>{{ $governate->name_ar ?? 'N/A' }}</td>
                                 <td>
                                     <div class="action-btn d-flex">
-                                </td>
-                                <td>
-                                    <div class="action-btn d-flex">
                                         <a href="{{ route('governates.edit', $governate->id) }}" class="text-primary edit me-2">
                                             <i class="ti ti-edit fs-5"></i>
                                         </a>
