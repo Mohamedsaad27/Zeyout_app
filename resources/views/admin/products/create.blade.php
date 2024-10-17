@@ -14,7 +14,7 @@
                 </div>
                 <div class="col-3">
                     <div class="text-center mb-n5">
-                        <a href="{{ route('products.create') }}" class="btn btn-primary">Add New Brand</a>
+                        <a href="{{ route('products.create') }}" class="btn btn-primary">Add New Product</a>
                     </div>
                 </div>
             </div>
@@ -49,8 +49,8 @@
                 </div>
                 <div class="row">
                     <div class="mb-3 col-6">
-                        <label for="logo" class="form-label">Logo</label>
-                        <input type="file" class="form-control" id="logo" name="logo" accept="image/*">
+                        <label for="image" class="form-label">Image</label>
+                        <input type="file" class="form-control" id="image" name="image" accept="image/*">
                     </div>
                     <div class="mb-3 col-6">
                         <label for="categories" class="form-label fw-semibold">Categories</label>

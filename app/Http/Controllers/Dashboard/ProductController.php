@@ -30,7 +30,7 @@ class ProductController extends Controller
             'description_ar' => 'required|string',
             'description_en' => 'required|string',
             'api' => 'nullable|numeric|min:0',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'categories' => 'required|array|min:1',
             'categories.*' => 'exists:categories,id',
             'brand_id' => 'required|exists:brands,id',
@@ -48,9 +48,17 @@ class ProductController extends Controller
                 File::makeDirectory(public_path($imagePath), 0755, true, true);
             }
             $image->move(public_path($imagePath), $imageName);
-                $validatedData['image'] = env('URL') . '/' . $imagePath . '/' . $imageName;
+            $validatedData['image'] = env('URL') . '/' . $imagePath . '/' . $imageName;
         }
-        $product = Product::create($validatedData);
+        $product = Product::create([
+            'name_ar' => $validatedData['name_ar'],
+            'name_en' => $validatedData['name_en'],
+            'description_ar' => $validatedData['description_ar'],
+            'description_en' => $validatedData['description_en'],
+            'api' => $validatedData['api'],
+            'image' => $validatedData['image'],
+            'brand_id' => $validatedData['brand_id'],
+        ]);
         
         if($request->has('categories')){
             $product->categories()->attach($request->categories);
