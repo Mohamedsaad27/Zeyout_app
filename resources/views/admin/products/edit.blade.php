@@ -90,9 +90,9 @@
                 </div>
                 <div class="row">
                     <div class="mb-3 col-6">
-                        <label for="logo" class="form-label">Logo</label>
-                        <input type="file" class="form-control @error('logo') is-invalid @enderror" id="logo" name="logo" accept="image/*">
-                        @error('logo')
+                        <label for="image" class="form-label">Image</label>
+                        <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" accept="image/*">
+                        @error('image')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>

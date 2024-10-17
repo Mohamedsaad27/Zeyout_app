@@ -89,6 +89,7 @@ class ProductController extends Controller
             'category_id' => 'required|exists:categories,id',
             'brand_id' => 'required|exists:brands,id',
             'product_variants' => 'required|array',
+            'api' => 'nullable|numeric|min:0',
             'product_variants.*.size' => 'nullable|string|max:50',
             'product_variants.*.mileage' => 'nullable|string|max:50',
             'product_variants.*.wholesale_price' => 'nullable|numeric|min:0',
@@ -100,11 +101,23 @@ class ProductController extends Controller
             }
             $image = $request->file('image');
             $imageName = time().'.'.$image->getClientOriginalExtension();
-            $imagePath = 'images/products/'.$imageName;
-            $image->move(public_path('images/products'), $imageName);
-            $validatedData['image'] = $imagePath;
+            $imagePath = 'uploads/images/products';
+            if (!File::isDirectory(public_path($imagePath))) {
+                File::makeDirectory(public_path($imagePath), 0755, true, true);
+            }
+            $image->move(public_path($imagePath), $imageName);
+            $validatedData['image'] = env('URL') . '/' . $imagePath . '/' . $imageName;
         }
-        $product->update($validatedData);
+        $product->update([
+            'name_ar' => $validatedData['name_ar'],
+            'name_en' => $validatedData['name_en'],
+            'description_ar' => $validatedData['description_ar'],
+            'description_en' => $validatedData['description_en'],
+            'price' => $validatedData['price'],
+            'image' => $validatedData['image'],
+            'brand_id' => $validatedData['brand_id'],
+            'api' => $validatedData['api'],
+        ]);
         if($request->has('categories')){
             $product->categories()->sync($request->categories);
         }

@@ -31,6 +31,7 @@ class UserResource extends JsonResource
         if ($this->type === 'trader' && $this->trader) {
             $data = array_merge($data, [
                 'description' => $locale == 'ar' ? $this->trader->description_ar : $this->trader->description_en,
+                'governate' => $this->locale == 'ar' ? $this->trader->governate->name_ar : $this->trader->governate->name_en,
                 'FacebookURL' => $this->trader->FacebookURL ?? null,
                 'InstagramURL' => $this->trader->InstagramURL ?? null,
             ]);

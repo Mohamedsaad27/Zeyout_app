@@ -12,11 +12,16 @@ use App\Models\User;
 class TraderRepository implements TraderRepositoryInterface
 {
     use HandleApiResponse;
-    public function getTraders()
+    public function getTraders($governate = null)
     {
         try {
             $traders = User::query()
                 ->where('type','trader')
+                ->when($governate, function ($query, $governate) {
+                    return $query->whereHas('trader', function ($query) use ($governate) {
+                        $query->where('governate_id', $governate);
+                    });
+                })
                 ->paginate(15);
             if($traders->isEmpty()){
                 return $this->errorResponse(trans('messages.no_traders'), 404);
