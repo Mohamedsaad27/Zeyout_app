@@ -15,7 +15,7 @@ class TraderRepository implements TraderRepositoryInterface
     public function getTraders($governate = null)
     {
         try {
-            $traders = User::with('trader')->where('type', 'trader')
+            $traders = User::with('trader.governate')->where('type', 'trader')
                 ->when($governate, function ($query, $governate) {
                     return $query->whereHas('trader', function ($query) use ($governate) {
                         $query->where('governate_id', $governate);
