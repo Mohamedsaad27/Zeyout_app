@@ -1,12 +1,13 @@
 <?php
 
-use App\Http\Controllers\FavoriteController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\TraderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\TraderController;
+use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\BannerController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -44,5 +45,10 @@ Route::prefix('traders')->middleware(['auth:sanctum', 'localization'])->group(fu
     Route::get('/search', [TraderController::class, 'searchOnTraders']);
 });
 
+
+
 Route::get('/filter', [ProductController::class, 'filterProducts'])->middleware('localization');
 Route::get('/regions', [ProductController::class, 'getRegions'])->middleware('localization');
+
+
+Route::get('application/banners', [BannerController::class, 'index'])->middleware('localization');

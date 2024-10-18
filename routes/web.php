@@ -10,7 +10,7 @@ use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\GovernateController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('admin.auth.login');
 });
 
 

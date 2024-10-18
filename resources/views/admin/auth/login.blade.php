@@ -1,65 +1,80 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Clinics System</title>
-    <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
-    <link rel="stylesheet" href="{{ asset('assets/css/dashboard/styles.min.css') }}">
+    <title>Zyout Egypt | Login</title>
+    <link rel="shortcut icon" type="image/png" href="/api/placeholder/32/32" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f2f5;
+        }
+        .login-container {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .login-form {
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        .login-button {
+            background: linear-gradient(to right, #667eea, #764ba2);
+            transition: all 0.3s ease;
+        }
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+    </style>
 </head>
-
-<body>
-    <!--  Body Wrapper -->
-    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
-        data-sidebar-position="fixed" data-header-position="fixed">
-        <div
-            class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
-            <div class="d-flex align-items-center justify-content-center w-100">
-                <div class="row justify-content-center w-100">
-                    <div class="col-md-8 col-lg-6 col-xxl-3">
-                        <div class="card mb-0">
-                            <div class="card-body">
-                                <p class="text-center fw-semibold fs-6 text-dark mb-5 mt-3">Hi Admin</p>
-                                <form method="POST" action="{{ route('login') }}">
-
-                                    @csrf
-
-                                    <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label">Email</label>
-                                        <input type="email" name="email" class="form-control"
-                                            value="{{ old('email') }}" id="exampleInputEmail1" placeholder="Enter Your Email"
-                                            aria-describedby="emailHelp">
-                                        @if ($errors->has('email'))
-                                            <div class="text-danger">
-                                                {{ $errors->first('email') }}
-                                            </div>
-                                        @endif
-                                    </div>
-                                    <div class="mb-4">
-                                        <label for="exampleInputPassword1" class="form-label">Password</label>
-                                        <input type="password" name="password" class="form-control"
-                                            value="{{ old('password') }}" id="exampleInputPassword1" placeholder="Enter Your Password">
-                                        @if ($errors->has('password'))
-                                            <div class="text-danger">
-                                                {{ $errors->first('password') }}
-                                            </div>
-                                        @endif
-                                    </div>
-                                    <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Login</button>
-                                </form>
-                            </div>
-                        </div>
+<body class="bg-gray-100">
+    <div class="min-h-screen flex items-center justify-center login-container">
+        <div class="max-w-md w-full space-y-8 p-10 login-form rounded-xl shadow-2xl">
+            <div>
+                <img src="{{asset('uploads/zyout1-01.png')}}" alt="Zyout Logo" class="brand-logo">
+                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                    Welcome Back
+                </h2>
+                <p class="mt-2 text-center text-sm text-gray-600">
+                    Sign in to your account
+                </p>
+            </div>
+            <form class="mt-8 space-y-6" action="{{route('login')}}" method="POST">
+                @csrf
+                <input type="hidden" name="remember" value="true">
+                <div class="rounded-md shadow-sm -space-y-px">
+                    <div>
+                        <label for="email-address" class="sr-only">Email address</label>
+                        <input id="email-address" name="email" type="email" autocomplete="email" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email address">
+                    </div>
+                    <div>
+                        <label for="password" class="sr-only">Password</label>
+                        <input id="password" name="password" type="password" autocomplete="current-password" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password">
                     </div>
                 </div>
-            </div>
+
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                        <label for="remember-me" class="ml-2 block text-sm text-gray-900">
+                            Remember me
+                        </label>
+                    </div>
+
+                    <div class="text-sm">
+                     
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white login-button focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Sign in
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
-    <script src="{{ asset('assets/libs/dashboard/js/jquery.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/dashboard/js/bootstrap.bundle.min.js') }}"></script>
 </body>
-
 </html>
