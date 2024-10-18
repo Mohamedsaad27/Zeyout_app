@@ -8,15 +8,15 @@ use App\Http\Resources\TraderResource;
 use App\Http\Resources\UserResource;
 use App\Interfaces\TraderRepositoryInterface;
 use App\Models\User;
-
+use Illuminate\Http\Request;
 class TraderRepository implements TraderRepositoryInterface
 {
     use HandleApiResponse;
-    public function getTraders($governate = null)
+    public function getTraders(Request $request)
     {
         try {
             $traders = User::with('trader.governate')->where('type', 'trader')
-                ->when($governate, function ($query, $governate) {
+                ->when($request->query('governate'), function ($query, $governate) {
                     return $query->whereHas('trader', function ($query) use ($governate) {
                         $query->where('governate_id', $governate);
                     });

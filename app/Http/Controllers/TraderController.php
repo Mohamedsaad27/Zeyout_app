@@ -14,8 +14,8 @@ class TraderController extends Controller
         $this->traderRepository = $traderRepositoryInterface;
     }
 
-    public function getTrades(){
-        return $this->traderRepository->getTraders();
+    public function getTrades(Request $request){
+        return $this->traderRepository->getTraders($request);
     }
 
     

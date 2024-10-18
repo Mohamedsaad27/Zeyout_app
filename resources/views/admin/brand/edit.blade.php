@@ -47,21 +47,21 @@ display: block;
                 @method('PUT')
                 <div class="mb-3">
                     <label for="name_ar" class="form-label">Name (Arabic)</label>
-                    <input type="text" value="{{$brand->name_ar}}" placeholder="Name (Arabic)" @error('name_ar') is-invalid @enderror class="form-control" id="name_ar" name="name_ar" >
+                    <input type="text" value="{{$brand->name_ar}}" placeholder="Name (Arabic)" class="form-control @error('name_ar') is-invalid @enderror" id="name_ar" name="name_ar" >
                     @error('name_ar')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="mb-3">
                     <label for="name_en" class="form-label">Name (English)</label>
-                    <input type="text" value="{{$brand->name_en}}" placeholder="Name (English)" @error('name_en') is-invalid @enderror class="form-control" id="name_en" name="name_en" >
+                    <input type="text" value="{{$brand->name_en}}" placeholder="Name (English)" class="form-control @error('name_en') is-invalid @enderror" id="name_en" name="name_en" >
                     @error('name_en')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="mb-3">
                     <label for="logo" class="form-label">Logo</label>
-                    <input type="file" value="{{$brand->logo}}" placeholder="Logo" class="form-control" id="logo" name="logo" accept="image/*">
+                    <input type="file" value="{{$brand->logo}}" placeholder="Logo" class="form-control @error('logo') is-invalid @enderror" id="logo" name="logo" accept="image/*">
                     @error('logo')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

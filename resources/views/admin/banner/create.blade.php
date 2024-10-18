@@ -35,19 +35,18 @@
                             <div class="form-group row">
                                 <div class="col">
                                     <label for="title_ar">Title (Arabic)</label>
-                                    <input type="text" @error('title_ar') class="form-control is-invalid" @else class="form-control" @enderror placeholder="Title (Arabic)" id="title_ar" name="title_ar" >
+                                    <input type="text" class="form-control @error('title_ar') is-invalid @enderror" placeholder="Title (Arabic)" id="title_ar" name="title_ar" value="{{old('title_ar')}}"  >
+                                    @error('title_ar')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        </span>
+                                    @enderror
                                 </div>
-                                @error('title_ar')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
                                 <div class="col">
                                     <label for="title_en">Title (English)</label>
-                                    <input type="text" @error('title_en') class="form-control is-invalid" @else class="form-control" @enderror placeholder="Title (English)" id="title_en" name="title_en" >
+                                    <input type="text" class="form-control @error('title_en') is-invalid @enderror" placeholder="Title (English)" id="title_en" name="title_en" value="{{old('title_en')}}"  >
                                 </div>
                                 @error('title_en')
-                                    <span class="invalid-feedback" role="alert">
+                                    <div class="invalid-feedback">{{ $message }}</div>
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
@@ -56,7 +55,7 @@
                             <div class="form-group row">
                                 <div class="col">
                                     <label for="description_ar">Description (Arabic)</label>
-                                    <textarea @error('description_ar') class="form-control is-invalid" @else class="form-control" @enderror  placeholder="Description (Arabic)" id="description_ar" name="description_ar" rows="3"></textarea>
+                                    <textarea class="form-control @error('description_ar') is-invalid @enderror" placeholder="Description (Arabic)" id="description_ar" name="description_ar" rows="3" value="{{old('description_ar')}}"></textarea>
                                 </div>
                                 @error('description_ar')
                                     <span class="invalid-feedback" role="alert">
@@ -65,7 +64,7 @@
                                 @enderror
                                 <div class="col">
                                     <label for="description_en">Description (English)</label>   
-                                    <textarea @error('description_en') class="form-control is-invalid" @else class="form-control" @enderror  placeholder="Description (English)" id="description_en" name="description_en" rows="3"></textarea>
+                                    <textarea class="form-control @error('description_en') is-invalid @enderror" placeholder="Description (English)" id="description_en" name="description_en" rows="3" value="{{old('description_en')}}"></textarea>
                                 </div>
                                 @error('description_en')
                                     <span class="invalid-feedback" role="alert">
@@ -75,13 +74,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="image">Image</label>
-                                <input type="file" @error('image') class="form-control is-invalid" @else class="form-control" @enderror placeholder="Image" id="image" name="image" >
+                                <input type="file" class="form-control @error('image') is-invalid @enderror" placeholder="Image" id="image" name="image" value="{{old('image')}}"  >
+                                @error('image')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
-                            @error('image')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
                             <button type="submit" class="btn btn-primary mt-4">Create</button>
                         </form>
                     </div>

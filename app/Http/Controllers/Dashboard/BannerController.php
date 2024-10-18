@@ -26,6 +26,17 @@ class BannerController extends Controller
             'description_ar' => 'nullable|string',
             'description_en' => 'nullable|string',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ],[
+            'title_ar.string' => 'Title (Arabic) must be a string',
+            'title_ar.max' => 'Title (Arabic) must be less than 255 characters',
+            'title_en.string' => 'Title (English) must be a string',
+            'title_en.max' => 'Title (English) must be less than 255 characters',
+            'description_ar.string' => 'Description (Arabic) must be a string',
+            'description_en.string' => 'Description (English) must be a string',
+            'image.required' => 'Image is required',
+            'image.image' => 'Image must be an image',
+            'image.mimes' => 'Image must be a valid image file',
+            'image.max' => 'Image must be less than 2048 kilobytes',
         ]);
         if($request->hasFile('image')){
             $image = $request->file('image');

@@ -145,7 +145,22 @@
     --bs-form-invalid-color: #fb977d;
     --bs-form-invalid-border-color: #fb977d
 }
-
+.is-invalid {
+    border-color: #dc3545;
+    }
+    
+    .invalid-feedback {
+    display: none;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 0.875em;
+    color: #dc3545;
+    }
+    
+    .is-invalid ~ .invalid-feedback {
+    display: block;
+    }
+    
 [data-bs-theme=dark] {
     color-scheme: dark;
     --bs-body-color: #adb5bd;

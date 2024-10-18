@@ -100,7 +100,12 @@ class BrandController extends Controller
         ]);
         return redirect()->route('brands.index')->with('successUpdate','Brand updated successfully');
     }
-
+    public function show($id)
+    {
+        $brand = Brand::findOrFail($id);
+        $products = $brand->products()->paginate(12); // Adjust the number as needed
+        return view('admin.brand.show', compact('brand', 'products'));
+    }
     public function destroy(Brand $brand)
     {
         try {

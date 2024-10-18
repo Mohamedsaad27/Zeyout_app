@@ -24,7 +24,8 @@ class ProductController extends Controller
     }
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+        $validatedData = $request->validate(
+            [
             'name_ar' => 'required|string|max:255',
             'name_en' => 'required|string|max:255',
             'description_ar' => 'required|string',
@@ -39,7 +40,33 @@ class ProductController extends Controller
             'product_variants.*.mileage' => 'nullable|string|max:50',
             'product_variants.*.wholesale_price' => 'nullable|numeric|min:0',
             'product_variants.*.unit_price' => 'nullable|numeric|min:0',
-        ]);
+        ],
+        [
+            'name_ar.required' => 'The Arabic name field is required.',
+            'name_en.required' => 'The English name field is required.',
+            'description_ar.required' => 'The Arabic description field is required.',
+            'description_en.required' => 'The English description field is required.',
+            'api.numeric' => 'The API field must be a number.',
+            'api.min' => 'The API field must be at least 0.',
+            'image.required' => 'The image field is required.',
+            'image.image' => 'The image must be an image.',
+            'image.mimes' => 'The image must be a valid image file.',
+            'image.max' => 'The image may not be greater than 2048 kilobytes.',
+            'categories.required' => 'The categories field is required.',
+            'categories.array' => 'The categories field must be an array.',
+            'categories.min' => 'The categories field must have at least 1 category.',
+            'categories.*.exists' => 'The selected category is invalid.',
+            'brand_id.required' => 'The brand field is required.',
+            'brand_id.exists' => 'The selected brand is invalid.',
+            'product_variants.required' => 'The product variants field is required.',
+            'product_variants.array' => 'The product variants field must be an array.',
+            'product_variants.min' => 'The product variants field must have at least 1 variant.',
+            'product_variants.*.size.required' => 'The size field is required.',
+            'product_variants.*.mileage.required' => 'The mileage field is required.',
+            'product_variants.*.wholesale_price.required' => 'The wholesale price field is required.',
+            'product_variants.*.unit_price.required' => 'The unit price field is required.',
+        ]
+    );
         if($request->hasFile('image')){
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
@@ -94,7 +121,34 @@ class ProductController extends Controller
             'product_variants.*.mileage' => 'nullable|string|max:50',
             'product_variants.*.wholesale_price' => 'nullable|numeric|min:0',
             'product_variants.*.unit_price' => 'nullable|numeric|min:0',
-        ]);
+        ],
+        [
+            'name_ar.required' => 'The Arabic name field is required.',
+            'name_en.required' => 'The English name field is required.',
+            'description_ar.required' => 'The Arabic description field is required.',
+            'description_en.required' => 'The English description field is required.',
+            'price.required' => 'The price field is required.',
+            'price.numeric' => 'The price field must be a number.',
+            'price.min' => 'The price field must be at least 0.',
+            'image.image' => 'The image must be an image.',
+            'image.mimes' => 'The image must be a valid image file.',
+            'image.max' => 'The image may not be greater than 2048 kilobytes.',
+            'api.numeric' => 'The API field must be a number.',
+            'api.min' => 'The API field must be at least 0.',
+            'categories.required' => 'The categories field is required.',
+            'categories.array' => 'The categories field must be an array.',
+            'categories.min' => 'The categories field must have at least 1 category.',
+            'categories.*.exists' => 'The selected category is invalid.',
+            'brand_id.required' => 'The brand field is required.',
+            'brand_id.exists' => 'The selected brand is invalid.',
+            'product_variants.required' => 'The product variants field is required.',
+            'product_variants.array' => 'The product variants field must be an array.',
+            'product_variants.*.size.required' => 'The size field is required.',
+            'product_variants.*.mileage.required' => 'The mileage field is required.',
+            'product_variants.*.wholesale_price.required' => 'The wholesale price field is required.',
+            'product_variants.*.unit_price.required' => 'The unit price field is required.',
+        ]
+    );
         if ($request->hasFile('image')) {
             if ($product->image && file_exists(public_path($product->image))) {
                 unlink(public_path($product->image));
@@ -122,6 +176,11 @@ class ProductController extends Controller
             $product->categories()->sync($request->categories);
         }
         return redirect()->route('products.index')->with('successUpdate','Product Updated Successfully');
+    }
+    public function show($id)
+    {
+        $product = Product::with('product_variants','categories','brand','relatedProducts')->find($id);
+        return view('admin.products.show', compact('product'));
     }
     public function destroy($id)
     {
