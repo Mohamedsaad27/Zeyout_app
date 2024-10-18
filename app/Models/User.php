@@ -50,16 +50,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-
-    public function getProfileImageAttribute($value)
-    {
-        return $value ? asset('storage/' . $value) : null;
-    }
-
-    public function getCreatedAtAttribute($value)
-    {
-        return Carbon::parse($value)->format('Y-m-d');
-    }
     public function favorites()
     {
         return $this->hasMany(Favorite::class);

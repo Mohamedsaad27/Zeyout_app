@@ -46,7 +46,7 @@ class BrandController extends Controller
                 File::makeDirectory(public_path($imagePath), 0755, true, true);
             }
             $image->move(public_path($imagePath), $imageName);
-                $validatedData['logo'] = env('URL') . '/' . $imagePath . '/' . $imageName;
+            $validatedData['logo'] = env('URL') . '/' . $imagePath . '/' . $imageName;
         }
         $brand = Brand::create([
             'name_ar' => $validatedData['name_ar'],
