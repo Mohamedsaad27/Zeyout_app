@@ -26,7 +26,8 @@ class TraderController extends Controller
     }
     public function show($id)
     {
-        return view('admin.trader.show', compact('id'));
+        $trader = Trader::with('user','products','governate')->find($id);
+        return view('admin.trader.show', compact('trader'));
     }
     public function store(StoreTraderRequest $request)
     {
@@ -65,16 +66,68 @@ class TraderController extends Controller
 
     public function edit($id)
     {
-        return view('admin.trader.edit', compact('id'));
+        $trader = Trader::with('user')->find($id);
+        $governates = Governate::all();
+        return view('admin.trader.edit', compact('trader', 'governates'));
     }
 
     public function update(Request $request, $id)
     {
-        return $request->all();
+        $validatedData = $request->validate([
+            'user_name' => 'required|string|max:255',
+            'email' => 'required|email|',
+            'phone_number' => 'required|string|max:255',
+            'birth_date' => 'nullable|date',
+            'country' => 'nullable|string|max:255',
+            'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'description_ar' => 'nullable|string|max:255',
+            'description_en' => 'nullable|string|max:255',
+            'facebook_url' => 'nullable|string|max:255|url',
+            'instagram_url' => 'nullable|string|max:255|url',
+            'governate' => 'required|exists:governates,id',
+        ]);
+        $trader = Trader::find($id);
+        $user = User::find($trader->user_id);
+        if($request->hasFile('profile_image')){
+            $profile_image = $request->file('profile_image');
+            $profile_image_name = time().'.'.$profile_image->getClientOriginalExtension();
+            $profile_image_path = 'uploads/images/users';
+            if (!File::isDirectory(public_path($profile_image_path))) {
+                File::makeDirectory(public_path($profile_image_path), 0755, true, true);
+            }
+            $profile_image->move(public_path($profile_image_path), $profile_image_name);
+            $validatedData['profile_image'] = env('URL') . '/' . $profile_image_path . '/' . $profile_image_name;
+        }
+        $user->update([
+            'user_name' => $validatedData['user_name'],
+            'email' => $validatedData['email'] ?? $user->email,
+            'phone_number' => $validatedData['phone_number'] ?? $user->phone_number,
+            'birth_date' => $validatedData['birth_date'] ?? $user->birth_date,
+            'country' => $validatedData['country'] ?? $user->country,
+            'profile_image' => $validatedData['profile_image'] ?? $user->profile_image,
+        ]);
+        $trader->update([
+            'description_ar' => $validatedData['description_ar'],
+            'description_en' => $validatedData['description_en'],
+            'facebook_url' => $validatedData['facebook_url'],
+            'instagram_url' => $validatedData['instagram_url'],
+            'governate_id' => $validatedData['governate'],
+        ]);
+        return redirect()->route('traders.index')->with('successUpdate','Trader updated successfully');
     }
 
     public function destroy($id)
     {
-        return $id;
+        $trader = Trader::find($id);
+        $user = User::find($trader->user_id);
+        if($user->profile_image){
+            $imagePath = $user->profile_image;
+            if (File::exists(public_path($imagePath))) {
+                File::delete(public_path($imagePath));
+            }
+        }
+        $user->delete();
+        $trader->delete();
+        return redirect()->route('traders.index')->with('successDelete','Trader deleted successfully');
     }
 }

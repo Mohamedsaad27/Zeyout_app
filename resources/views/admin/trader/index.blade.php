@@ -114,7 +114,7 @@
                                         <form action="{{ route('traders.destroy', $trader->id) }}" method="POST" class="d-inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="button" class="bg-transparent border-0 delete-banner">
+                                            <button type="button" class="bg-transparent border-0 delete-trader">
                                                 <i class="ti ti-trash text-danger fs-6"></i>
                                             </button>
                                         </form>

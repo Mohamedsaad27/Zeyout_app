@@ -31,7 +31,7 @@
             <div class="row">
                 <div class="mb-3 col-6">
                     <label for="name" class="form-label">Name</label>
-                    <input type="text" value="{{old('user_name')}}" placeholder="Name" class="form-control @error('user_name') is-invalid @enderror" id="name" name="user_name" >
+                    <input type="text" value="{{old('user_name')}}" placeholder="Name" class="form-control @error('user_name') is-invalid @enderror" id="name" name="user_name" a>
                     @error('user_name')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
