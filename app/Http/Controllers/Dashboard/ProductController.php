@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Models\ProductVariant;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 
@@ -111,12 +112,12 @@ class ProductController extends Controller
             'name_en' => 'required|string|max:255',
             'description_ar' => 'required|string',
             'description_en' => 'required|string',
-            'price' => 'required|numeric|min:0',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'category_id' => 'required|exists:categories,id',
-            'brand_id' => 'required|exists:brands,id',
-            'product_variants' => 'required|array',
             'api' => 'nullable|numeric|min:0',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'categories' => 'required|array|min:1',
+            'categories.*' => 'exists:categories,id',
+            'brand_id' => 'required|exists:brands,id',
+            'product_variants' => 'required|array|min:1',
             'product_variants.*.size' => 'nullable|string|max:50',
             'product_variants.*.mileage' => 'nullable|string|max:50',
             'product_variants.*.wholesale_price' => 'nullable|numeric|min:0',
@@ -167,13 +168,17 @@ class ProductController extends Controller
             'name_en' => $validatedData['name_en'],
             'description_ar' => $validatedData['description_ar'],
             'description_en' => $validatedData['description_en'],
-            'price' => $validatedData['price'],
-            'image' => $validatedData['image'],
+            'image' => $validatedData['image'] ?? $product->image,
             'brand_id' => $validatedData['brand_id'],
             'api' => $validatedData['api'],
         ]);
         if($request->has('categories')){
             $product->categories()->sync($request->categories);
+        }
+        if($request->has('product_variants')){
+            foreach ($request->product_variants as $variant) {
+                $product->product_variants()->updateOrCreate($variant);
+            }
         }
         return redirect()->route('products.index')->with('successUpdate','Product Updated Successfully');
     }

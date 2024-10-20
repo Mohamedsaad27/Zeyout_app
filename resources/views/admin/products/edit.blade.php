@@ -10,6 +10,11 @@
                 });
             @endif
         </script>
+         <script>
+            $('#add_variant').click(function(){
+                $('#product_variant_template').show();
+            });
+        </script>
         <style>
             .is-invalid {
     border-color: #dc3545;
@@ -128,6 +133,7 @@
                     <div class="mb-3 col-6">
                         <label for="product_variants" class="form-label">Product Details</label>
                         <div id="product_variants">
+                            @foreach($product->product_variants as $variant)
                             <div class="product-variant">
                                 <div class="row">
                                     <div class="mb-3 col-6">
@@ -162,6 +168,30 @@
                                     </div>
                                 </div>
                             </div>
+                            @endforeach
+                            <button type="button" class="btn btn-primary" id="add_variant">Add Variant</button>
+                            <div class="product-variant" style="display: none;" id="product_variant_template">
+                                <div class="row">
+                                    <div class="mb-3 col-6">
+                                        <label for="size" class="form-label w-100 ">Size</label>
+                                        <input type="text" placeholder="Size" class="form-control" id="size" name="product_variants[{{ count($product->product_variants) }}][size]">
+                                    </div>
+                                    <div class="mb-3 col-6">
+                                        <label for="mileage" class="form-label">Mileage</label>
+                                        <input type="text" placeholder="Mileage" class="form-control" id="mileage" name="product_variants[{{ count($product->product_variants) }}][mileage]">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="mb-3 col-6">
+                                        <label for="wholesale_price" class="form-label">Wholesale Price</label>
+                                        <input type="number" placeholder="Wholesale Price" class="form-control" id="wholesale_price" name="product_variants[{{ count($product->product_variants) }}][wholesale_price]">
+                                    </div>
+                                    <div class="mb-3 col-6">
+                                        <label for="unit_price" class="form-label">Unit Price</label>
+                                        <input type="number" placeholder="Unit Price" class="form-control" id="unit_price" name="product_variants[{{ count($product->product_variants) }}][unit_price]">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -170,3 +200,4 @@
         </div>
     </div>
 @endsection
+
