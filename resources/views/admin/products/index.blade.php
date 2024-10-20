@@ -76,13 +76,10 @@
                     <thead>
                         <tr>
                             <th>Product English Name</th>
-                            <th>Product Arabic Name</th>
                             <th>Product English Description</th>
-                            <th>Product Arabic Description</th>
                             <th>Brand</th>
                             <th>Categories</th>
                             <th>Product Details</th>
-                            <th>API</th>
                             <th>Image</th>
                             <th>Actions</th>
                         </tr>
@@ -97,9 +94,7 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td>{{ $product->name_ar }}</td>
                                 <td>{{ $product->description_en }}</td>
-                                <td>{{ $product->description_ar }}</td>
                                 <td>{{ $product->brand->name_en }}</td>
                                 <td>
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#categoriesModal{{ $loop->iteration }}">
@@ -140,7 +135,6 @@
                                         {{ $variant->size }}
                                     @endforeach
                                 </td>
-                                <td>{{ $product->api }}</td>
                                 <td>
                                     <img src="{{ $product->image }}" alt="Product Image" class="img-fluid" style="max-width: 100px; max-height: 100px;">
                                 </td>
