@@ -64,4 +64,16 @@ class ProductRepository implements ProductRepositoryInterface
             return $this->errorResponse($exception->getMessage(), 500);
         }
     }
+    public function searchProducts(Request $request)
+    {
+        try {
+            $products = Product::with(['categories', 'brand', 'product_variants', 'favorites'])->search($request)->get();
+            if($products->isEmpty()){
+                return $this->errorResponse(trans('messages.no_products_found'), 404);
+            }
+            return $this->successResponse(ProductResource::collection($products), trans('messages.products_found'), 200);
+        } catch (\Exception $exception) {
+            return $this->errorResponse($exception->getMessage(), 500);
+        }
+    }
 }

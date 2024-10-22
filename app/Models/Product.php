@@ -47,7 +47,13 @@ class Product extends Model
                 });
             });
     }
-
+    public function scopeSearch($query, $request)
+    {
+        return  $query->when($request->query('name_en'), function ($query, $search) {
+            $query->where('name_en', 'like', '%' . $search . '%')
+                  ->orWhere('name_ar', 'like', '%' . $search . '%');
+        });
+    }
     public function trader()
     {
         return $this->belongsTo(Trader::class);

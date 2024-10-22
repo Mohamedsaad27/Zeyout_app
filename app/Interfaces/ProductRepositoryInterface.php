@@ -9,4 +9,5 @@ interface ProductRepositoryInterface
     public function getProductById($productId);
     public function filterProducts(Request $request);
     public function getRegions();
+    public function searchProducts(Request $request);
 }
