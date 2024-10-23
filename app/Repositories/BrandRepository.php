@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Traits\HandleApiResponse;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\BrandResource;
+use App\Http\Resources\SingleBrandResource;
 use App\Interfaces\BrandRepositoryInterface;
 
 class BrandRepository implements BrandRepositoryInterface
