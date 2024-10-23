@@ -23,7 +23,7 @@ class ProductResource extends JsonResource
         'image' => $this->image,
         'is_favorite' => $isFavorite,
         'product_variants' => ProductVariantResource::collection($this->product_variants),
-        'categories' => $this->category ? ($locale == 'ar' ? $this->category->pluck('name_ar') : $this->category->pluck('name_en')) : [],
+        'categories' => $this->categories ? ($locale == 'ar' ? $this->categories->pluck('name_ar') : $this->categories->pluck('name_en')) : [],
         'brand' => $this->brand ? ($locale == 'ar' ? $this->brand->name_ar : $this->brand->name_en) : null,
         'API' => $this->API,
     ];

@@ -18,7 +18,7 @@ class ProductRepository implements ProductRepositoryInterface
     {
         try {
             $products = Product::query()
-                ->with('favorites', 'product_variants')
+                ->with('favorites', 'product_variants', 'categories', 'brand')
                 ->paginate(10);
             if($products->isEmpty()){
                 return $this->errorResponse(trans('messages.no_products'), 404);
