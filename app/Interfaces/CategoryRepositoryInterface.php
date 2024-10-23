@@ -9,6 +9,7 @@ interface CategoryRepositoryInterface
 {
     public function index();
     public function store(Request $request);
+    public function getCategoryById($categoryId);
     public function update(Request $request, Category $category);
     public function destroy(Category $category);
 }

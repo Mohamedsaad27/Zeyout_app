@@ -50,4 +50,6 @@ return [
     'products_found' => 'Products found',
     'no_products_found' => 'No products found',
     'regions_retrieved' => 'Regions retrieved successfully',
+    'category_not_found' => 'Category not found',
+    'category_retrieved' => 'Category retrieved successfully',
 ];

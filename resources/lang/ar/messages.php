@@ -55,4 +55,6 @@ return [
     'trader_not_found' => 'هذا التاجر غير موجود',
     'trader_retrieved' => 'تم استرجاع بيانات التاجر بنجاح',
     'regions_retrieved' => 'تم استرجاع المناطق بنجاح',
+    'category_not_found' => 'لم يتم العثور على الفئة',
+    'category_retrieved' => 'تم استرجاع بيانات الفئة بنجاح',
 ];

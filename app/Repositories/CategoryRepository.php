@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\CategoryResource;
+use App\Http\Resources\SingleCategoryResource;
 use App\Interfaces\CategoryRepositoryInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -81,5 +82,12 @@ class CategoryRepository implements CategoryRepositoryInterface
             $image->move(public_path($imagePath), $imageName);
             $data['logo'] = $imagePath . '/' . $imageName;
         }
+    }
+    public function getCategoryById($categoryId){
+        $category = Category::with('products')->find($categoryId);
+        if(!$category){
+            return $this->errorResponse(trans('messages.category_not_found'), 404);
+        }
+        return $this->successResponse(new SingleCategoryResource($category), trans('messages.category_retrieved_successfully'), 200);
     }
 }

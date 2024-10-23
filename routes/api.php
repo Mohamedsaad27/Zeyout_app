@@ -18,6 +18,7 @@ require base_path('routes/auth.php');
 Route::prefix('categories')->middleware('localization')->group(function () {
     Route::get('/', [CategoryController::class, 'index']);
     Route::post('/', [CategoryController::class, 'store']);
+    Route::get('/{id}', [CategoryController::class, 'getCategoryById']);
     Route::middleware('auth:sanctum')->group(function () {
         Route::put('/{id}', [CategoryController::class, 'update']);
         Route::delete('/{id}', [CategoryController::class, 'destroy']);

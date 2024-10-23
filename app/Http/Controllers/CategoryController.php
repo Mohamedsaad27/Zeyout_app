@@ -24,4 +24,8 @@ class CategoryController extends Controller
     {
         return $this->categoryRepository->store($request);
     }
+
+    public function getCategoryById($categoryId){
+        return $this->categoryRepository->getCategoryById($categoryId);
+    }
 }
