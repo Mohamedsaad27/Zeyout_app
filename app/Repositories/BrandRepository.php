@@ -27,7 +27,7 @@ class BrandRepository implements BrandRepositoryInterface
     public function getBrandById($brandId)
     {
         try {
-            $brand = Brand::find($brandId);
+            $brand = Brand::with('products')->find($brandId);
             return $this->successResponse( new BrandResource($brand), trans('messages.brand_retrieved'));
         } catch (\Exception $e) {
             return $this->errorResponse($e->getMessage(),500);

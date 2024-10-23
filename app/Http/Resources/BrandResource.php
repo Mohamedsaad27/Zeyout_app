@@ -14,6 +14,7 @@ class BrandResource extends JsonResource
             'id' => $this->id,
             'name' => $locale == 'ar' ? $this->name_ar : $this->name_en,
             'logo' => $this->logo,
+            'products' => ProductResource::collection($this->products),
         ];
     }
 }
