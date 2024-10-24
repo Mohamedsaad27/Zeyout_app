@@ -23,7 +23,4 @@ class TraderController extends Controller
         return $this->traderRepository->getTraderDetails($id);
     }
 
-    public function searchOnTraders($searchTerm){
-        return $this->traderRepository->searchOnTraders($searchTerm);
-    }
 }

@@ -35,6 +35,7 @@ class UserResource extends JsonResource
                 'FacebookURL' => $this->trader->FacebookURL ?? null,
                 'InstagramURL' => $this->trader->InstagramURL ?? null,
             ]);
+            
         }
 
         // Add these lines to ensure the trader data is always included
