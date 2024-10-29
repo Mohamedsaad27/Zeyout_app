@@ -15,8 +15,13 @@ class Trader extends Model
         'InstagramURL',
         'user_id',
         'governate_id',
+        'number_of_days',
+        'is_active',
+        'expires_at',
     ];
-
+    protected $casts = [
+        'expires_at' => 'datetime',
+    ];
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -28,5 +33,9 @@ class Trader extends Model
     public function governate()
     {
         return $this->belongsTo(Governate::class);
+    }
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
     }
 }

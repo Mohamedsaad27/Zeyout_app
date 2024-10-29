@@ -52,4 +52,5 @@ return [
     'regions_retrieved' => 'Regions retrieved successfully',
     'category_not_found' => 'Category not found',
     'category_retrieved' => 'Category retrieved successfully',
+    'trader_is_not_active' => 'Trader is not active',
 ];

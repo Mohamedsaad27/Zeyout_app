@@ -68,6 +68,12 @@ class AuthRepository implements AuthRepositoryInterface
             $credentials = $loginRequest->only(['email', 'password']);
             if (Auth::attempt($credentials)) {
                 $user = Auth::user();
+                if($user->type == 'trader'){
+                    $trader = Trader::where('user_id', $user->id)->first();
+                    if(!$trader->is_active){
+                        return $this->errorResponse(trans('messages.trader_is_not_active'), 401);
+                    }
+                }
                 $token = $user->createToken($loginRequest->userAgent())->plainTextToken;
                 $user['token'] = $token;
                 return $this->successResponse(

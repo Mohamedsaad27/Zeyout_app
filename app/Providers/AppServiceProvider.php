@@ -11,6 +11,7 @@ use Illuminate\Support\ServiceProvider;
 use App\Repositories\CategoryRepository;
 use App\Repositories\FavoriteRepository;
 use App\Interfaces\AuthRepositoryInterface;
+use Illuminate\Console\Scheduling\Schedule;
 use App\Interfaces\BrandRepositoryInterface;
 use App\Interfaces\BannerRepositoryInterface;
 use App\Interfaces\TraderRepositoryInterface;
@@ -39,6 +40,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $this->app->booted(function () {
+            $schedule = $this->app->make(Schedule::class);
+            $schedule->command('app:deactivate-traders')->daily();
+        });
     }
 }

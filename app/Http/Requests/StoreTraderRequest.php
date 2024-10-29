@@ -33,6 +33,7 @@ class StoreTraderRequest extends FormRequest
             'facebook_url' => 'nullable|string|max:255|url',
             'instagram_url' => 'nullable|string|max:255|url',
             'governate' => 'required|exists:governates,id',
+            'number_of_days' => 'required|integer|min:1',
         ];
     }
     public function messages(): array
@@ -54,6 +55,9 @@ class StoreTraderRequest extends FormRequest
             'governate.exists' => 'The selected governate is invalid.',
             'facebook_url.url' => 'The Facebook URL must be a valid URL.',
             'instagram_url.url' => 'The Instagram URL must be a valid URL.',
+            'number_of_days.required' => 'The number of days is required.',
+            'number_of_days.integer' => 'The number of days must be an integer.',
+            'number_of_days.min' => 'The number of days must be at least 1.',
         ];
     }
 }

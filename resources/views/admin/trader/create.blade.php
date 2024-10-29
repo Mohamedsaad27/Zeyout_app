@@ -116,6 +116,13 @@
                         @endforeach
                     </select>
                 </div>
+                <div class="mb-3 col-6">
+                    <label for="number_of_days" class="form-label">Number Of Days</label>
+                    <input type="number" min="1"  value="{{old('number_of_days')}}" placeholder="Number Of Days" class="form-control @error('number_of_days') is-invalid @enderror" id="number_of_days" name="number_of_days" >
+                    @error('number_of_days')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
             </div>
             <div class="mb-3">
                 <button type="submit" class="btn btn-primary">Create</button>

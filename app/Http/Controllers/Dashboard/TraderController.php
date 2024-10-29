@@ -53,13 +53,18 @@ class TraderController extends Controller
             'type' => 'trader',
 
         ]);
-        $trader = Trader::create([
+           // Calculate expiration date
+           $expirationDate = now()->addDays((int)$validatedData['number_of_days']);
+           $trader = Trader::create([
             'user_id' => $user->id,
             'governate_id' => $validatedData['governate'],
             'description_ar' => $validatedData['description_ar'],
             'description_en' => $validatedData['description_en'],
             'facebook_url' => $validatedData['facebook_url'],
             'instagram_url' => $validatedData['instagram_url'],
+            'number_of_days' => $validatedData['number_of_days'],
+            'is_active' => true,
+            'expires_at' => $expirationDate,
         ]);
         return redirect()->route('traders.index')->with('successCreate','Trader created successfully');
     }
