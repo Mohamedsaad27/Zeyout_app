@@ -38,7 +38,7 @@ class TraderRepository implements TraderRepositoryInterface
     public function getTraderDetails($traderId)
     {
         try {
-            $trader = Trader::with('user','governate')
+            $trader = Trader::with('user','governate','products')
                 ->find($traderId);
             if(!$trader){
                 return $this->errorResponse(trans('messages.trader_not_found'), 404);
