@@ -29,6 +29,7 @@ class SingleTraderResource extends JsonResource
             'governate' => $this->governate ? ($locale == 'ar' ? $this->governate->name_ar : $this->governate->name_en) : null,
             'FacebookURL' => $this->FacebookURL ?? null,
             'InstagramURL' => $this->InstagramURL ?? null,
+            
             'products' => ProductResource::collection($this->products),
        ];
     }

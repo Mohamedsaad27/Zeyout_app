@@ -16,6 +16,11 @@ class Category extends Model
         return $this->belongsToMany(Product::class, 'product_categories', 'category_id', 'product_id');
     }
 
+    public function traders()
+    {
+        return $this->hasMany(Trader::class);
+    }
+
 
     protected static function boot()
     {

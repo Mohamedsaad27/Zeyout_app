@@ -18,6 +18,7 @@ class Trader extends Model
         'number_of_days',
         'is_active',
         'expires_at',
+        'category_id',
     ];
     protected $casts = [
         'expires_at' => 'datetime',
@@ -37,5 +38,9 @@ class Trader extends Model
     public function scopeActive($query)
     {
         return $query->where('is_active', true);
+    }
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 }

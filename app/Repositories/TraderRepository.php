@@ -21,6 +21,9 @@ class TraderRepository implements TraderRepositoryInterface
                 ->when($request->query('governate'), function ($query, $governate) {
                     return $query->where('governate_id', $governate);
                 })
+                ->when($request->query('category'), function ($query, $category) {
+                    return $query->where('category_id', $category);
+                })
                 ->when($request->query('name'), function ($query, $name) {
                     return $query->whereHas('user', function ($q) use ($name) {
                         $q->Where('user_name', 'like', '%' . $name . '%');
