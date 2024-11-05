@@ -17,7 +17,7 @@ class TraderResource extends JsonResource
     {
         $locale = $request->header('Accept-Language');
        return [
-            'id' => $this->user->id,
+            'id' => $this->id,
             'user_name' => $this->user->user_name,
             'email' => $this->user->email,
             'country' => $this->user->country,
