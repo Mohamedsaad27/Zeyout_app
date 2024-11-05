@@ -35,7 +35,7 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
         $credentials = $request->only('email', 'password');
-        if (Auth::attempt($credentials)) {
+        if (Auth::guard('web')->attempt($credentials)) {
             return redirect()->route('dashboard.index');
         }
         return back()->withErrors(['email' => 'These Credentials do not match our records.  ']);

@@ -207,15 +207,4 @@ class ProductController extends Controller
         $product->delete();
         return redirect()->route('products.index')->with('successDelete', 'Product Deleted Successfully');
     }
-    public function addVariant(Request $request)
-    {
-        $lastVariantIndex = $request->input('variants_count', 0);
-        $newIndex = $lastVariantIndex + 1;
-
-        $html = view('components.product-varient', [
-            'index' => $newIndex
-        ])->render();
-
-        return $html;
-    }
 }

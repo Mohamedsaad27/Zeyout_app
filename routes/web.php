@@ -14,7 +14,7 @@ Route::get('/', function () {
 });
 
 
-Route::prefix('dashboard')->group(function () {
+Route::prefix('dashboard')->middleware('auth')->group(function () {
     Route::resource('brands', BrandController::class);
     Route::resource('categories', CategoryController::class);
     Route::resource('products', ProductController::class);
@@ -27,5 +27,4 @@ Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('login', [AuthController::class, 'login']);
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('dashboard', [AuthController::class, 'index'])->name('dashboard.index');
-Route::post('/add-variant', [ProductController::class, 'addVariant'])->name('add-variant');
+Route::get('dashboard', [AuthController::class, 'index'])->name('dashboard.index')->middleware('auth');

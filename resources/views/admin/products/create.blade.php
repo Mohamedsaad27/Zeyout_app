@@ -1,26 +1,6 @@
 @extends('layouts.admin.admin-layout')
 @section('content')
-@push('scripts')
-    <script>
-        document.getElementById('add-variant').addEventListener('click', function() {
-            fetch('/add-variant', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                },
-                body: JSON.stringify({ variants_count: document.querySelectorAll('.product-variant').length })
-            })
-            .then(response => response.text())
-            .then(html => {
-                document.getElementById('product_variants').insertAdjacentHTML('beforeend', html);
-            })
-            .catch(error => {
-                console.error('Error adding variant:', error);
-            });
-        });
-    </script>
-@endpush
+
     <div class="card bg-light-info shadow-none position-relative overflow-hidden">
         <div class="card-body px-4 py-3">
             <div class="row align-items-center">
@@ -200,5 +180,42 @@
             </form>
         </div>
     </div>
+    @push('scripts')
+<script>
+    document.getElementById('add-variant').addEventListener('click', function() {
+        var variantsCount = document.getElementById('product_variants').children.length;
+        var newVariant = document.createElement('div');
+        newVariant.innerHTML = `
+            <div class="product-variant">
+                <div class="row">
+                    <div class="mb-3 col-6">
+                        <label for="size" class="form-label w-100 ">Size</label>
+                        <input type="text" placeholder="Size"
+                            class="form-control" id="size" name="product_variants[${variantsCount}][size]">
+                    </div>
+                    <div class="mb-3 col-6">
+                        <label for="mileage" class="form-label">Mileage</label>
+                        <input type="text" placeholder="Mileage"
+                            class="form-control" id="mileage" name="product_variants[${variantsCount}][mileage]">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mb-3 col-6">
+                        <label for="wholesale_price" class="form-label">Wholesale Price</label>
+                        <input type="number" placeholder="Wholesale Price"
+                            class="form-control" id="wholesale_price" name="product_variants[${variantsCount}][wholesale_price]">
+                    </div>
+                    <div class="mb-3 col-6">
+                        <label for="unit_price" class="form-label">Unit Price</label>
+                        <input type="number" placeholder="Unit Price"
+                            class="form-control" id="unit_price" name="product_variants[${variantsCount}][unit_price]">
+                    </div>
+                </div>
+            </div>
+        `;
+        document.getElementById('product_variants').appendChild(newVariant);
+    });
+</script>
+@endpush
 @endsection
 
