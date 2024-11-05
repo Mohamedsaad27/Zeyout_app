@@ -28,3 +28,4 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('dashboard', [AuthController::class, 'index'])->name('dashboard.index');
+Route::post('/add-variant', [ProductController::class, 'addVariant'])->name('add-variant');

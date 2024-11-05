@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Models\User;
 use App\Models\Trader;
+use App\Models\Category;
 use App\Models\Governate;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -22,7 +23,8 @@ class TraderController extends Controller
     public function create()
     {
         $governates = Governate::all();
-        return view('admin.trader.create', compact('governates'));
+        $categories = Category::all();
+        return view('admin.trader.create', compact('governates', 'categories'));
     }
     public function show($id)
     {
@@ -51,7 +53,6 @@ class TraderController extends Controller
             'country' => $validatedData['country'],
             'profile_image' => $validatedData['profile_image'] ?? null,
             'type' => 'trader',
-
         ]);
            // Calculate expiration date
            $expirationDate = now()->addDays((int)$validatedData['number_of_days']);
@@ -65,6 +66,7 @@ class TraderController extends Controller
             'number_of_days' => $validatedData['number_of_days'],
             'is_active' => true,
             'expires_at' => $expirationDate,
+            'category_id' => $validatedData['category'],
         ]);
         return redirect()->route('traders.index')->with('successCreate','Trader created successfully');
     }
@@ -73,7 +75,8 @@ class TraderController extends Controller
     {
         $trader = Trader::with('user')->find($id);
         $governates = Governate::all();
-        return view('admin.trader.edit', compact('trader', 'governates'));
+        $categories = Category::all();  
+        return view('admin.trader.edit', compact('trader', 'governates', 'categories'));
     }
 
     public function update(Request $request, $id)
@@ -90,6 +93,7 @@ class TraderController extends Controller
             'facebook_url' => 'nullable|string|max:255|url',
             'instagram_url' => 'nullable|string|max:255|url',
             'governate' => 'required|exists:governates,id',
+            'category' => 'required|exists:categories,id',
         ]);
         $trader = Trader::find($id);
         $user = User::find($trader->user_id);
@@ -117,6 +121,7 @@ class TraderController extends Controller
             'facebook_url' => $validatedData['facebook_url'],
             'instagram_url' => $validatedData['instagram_url'],
             'governate_id' => $validatedData['governate'],
+            'category_id' => $validatedData['category'],
         ]);
         return redirect()->route('traders.index')->with('successUpdate','Trader updated successfully');
     }

@@ -33,7 +33,7 @@
     <div class="min-h-screen flex items-center justify-center login-container">
         <div class="max-w-md w-full space-y-8 p-10 login-form rounded-xl shadow-2xl">
             <div>
-                <img src="{{asset('uploads/zyout1-01.png')}}" alt="Zyout Logo" class="brand-logo">
+                <img src="{{asset('public/uploads/zyout1-01.png')}}" alt="Zyout Logo" class="brand-logo">
                 <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
                     Welcome Back
                 </h2>

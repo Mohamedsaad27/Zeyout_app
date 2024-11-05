@@ -34,6 +34,7 @@ class StoreTraderRequest extends FormRequest
             'instagram_url' => 'nullable|string|max:255|url',
             'governate' => 'required|exists:governates,id',
             'number_of_days' => 'required|integer|min:1',
+            'category' => 'required|exists:categories,id',
         ];
     }
     public function messages(): array
@@ -58,6 +59,8 @@ class StoreTraderRequest extends FormRequest
             'number_of_days.required' => 'The number of days is required.',
             'number_of_days.integer' => 'The number of days must be an integer.',
             'number_of_days.min' => 'The number of days must be at least 1.',
+            'category.required' => 'The category is required.',
+            'category.exists' => 'The selected category is invalid.',
         ];
     }
 }

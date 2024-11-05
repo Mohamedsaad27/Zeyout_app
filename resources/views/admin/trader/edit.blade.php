@@ -117,6 +117,15 @@
                         @endforeach
                     </select>
                 </div>
+                <div class="mb-3 col-6">
+                    <label for="category" class="form-label">Category</label>
+                    <select class="form-select" id="category" name="category" >
+                        <option value="">Select Category</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}" {{ $trader->category_id == $category->id ? 'selected' : '' }}>{{ $category->name_ar }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
             <div class="mb-3">
                 <button type="submit" class="btn btn-primary">Update</button>

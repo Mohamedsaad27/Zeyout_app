@@ -5,8 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Zyout Egypt</title>
-    <link rel="shortcut icon" type="image/png" href="{{ asset('uploads/zyout1-01.png') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/css/dashboard/styles.min.css') }}" />
+    <link rel="shortcut icon" type="image/png" href="{{ asset('public/uploads/zyout1-01.png') }}" />
+    <link rel="stylesheet" href="{{ asset('public/assets/css/dashboard/styles.min.css') }}" />
     <head>
         <!-- Add Font Awesome CDN here -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -41,13 +41,13 @@
 
         </div>
     </div>
-    <script src="{{ asset('assets/libs/dashboard/js/jquery.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/dashboard/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('assets/js/dashboard/sidebarmenu.js') }}"></script>
-    <script src="{{ asset('assets/js/dashboard/app.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/dashboard/js/apexcharts.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/dashboard/js/simplebar.js') }}"></script>
-    <script src="{{ asset('assets/js/dashboard/dashboard.js') }}"></script>
+    <script src="{{ asset('public/assets/libs/dashboard/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('public/assets/libs/dashboard/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('public/assets/js/dashboard/sidebarmenu.js') }}"></script>
+    <script src="{{ asset('public/assets/js/dashboard/app.min.js') }}"></script>
+    <script src="{{ asset('public/assets/libs/dashboard/js/apexcharts.min.js') }}"></script>
+    <script src="{{ asset('public/assets/libs/dashboard/js/simplebar.js') }}"></script>
+    <script src="{{ asset('public/assets/js/dashboard/dashboard.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
     @stack('scripts')
 </body>
